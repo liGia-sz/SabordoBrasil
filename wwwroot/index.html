@@ -1,71 +1,479 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Carreiras - Casa da Construção</title>
-  <link rel="icon" href="img/Logo Barra .png" type="image/png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
-  
-  <style>
-    body
-      {
-        font-family: "Hammersmith One", sans-serif;
-        background-color: rgb(255, 252, 248);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor do Brasil - Pratos</title>
+    <style>
+        /* Estilos básicos para o layout */
+        body {
+            display: grid;
+            grid-template-columns: 20% 60% 20%;
+            font-family: sans-serif;
+        }
+        .perfil {
+            /* Estilos para a primeira coluna */
+            padding: 20px;
+        }
+        .main {
+            /* Estilos para a segunda coluna */
+            padding: 20px;
+            border: 1px solid #C2BEBE;
+        }
+        .login {
+            /* Estilos para a terceira coluna */
+            padding: 20px;
+            text-align: center;
+        }
+        .prato {
+            border: 1px solid #eee;
+            margin-bottom: 15px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .prato img {
+            max-width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .interacoes {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .rodape {
+            grid-column: 1 / -1;
+            background-color: #D97014;
+            color: #FFFFFF;
+            padding: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .linha-cor {
+            height: 5px;
+            background-color: #D97014;
+            margin: 10px 0;
+        }
+        .login-button {
+            background-color: #D97014;
+            color: #FFFFFF;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Estilos para o Modal de Login */
+        #modal-login {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 300px; /* Largura fixa para o modal */
+            border-radius: 8px;
+        }
+        #modal-login h2 {
+            margin-bottom: 15px;
+            text-align: center;
+            color: #333;
+        }
+        #modal-login label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        #modal-login input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Garante que o padding não aumenta a largura total */
+        }
+        #modal-login input:focus {
+            border-color: #D97014;
+            outline: none; /* Remove a borda padrão do navegador */
+        }
+        #modal-login .erro-input {
+            border-color: red !important;
+        }
+        #modal-login .erro-mensagem {
+            color: red;
+            margin-bottom: 10px;
+            display: none;
+            font-size: 0.9em;
+        }
+        #modal-login .botoes-login {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        #modal-login .botao-cancelar {
+            background-color: transparent;
+            border: 1px solid #D97014;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #D97014;
+        }
+        #modal-login .botao-cancelar:hover {
+            background-color: #f8f8f8; /* Leve feedback visual ao passar o mouse */
+        }
+        #modal-login .botao-entrar {
+            background-color: #D97014;
+            color: #FFFFFF;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        #modal-login .botao-entrar:hover {
+            background-color: #c05604; /* Escurece um pouco ao passar o mouse */
+        }
+
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .usuario-logado {
+            display: none; /* Inicialmente escondido */
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .usuario-logado h2 {
+            color: #D97014;
+            margin-bottom: 10px;
+        }
+        .usuario-logado p {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .logout-button {
+            background-color: #D97014;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .logout-button:hover {
+            background-color: #c05604;
+        }
+
+    </style>
 </head>
+<body>
+    <div class="perfil">
+        <img src="/images/logo_sabor_do_brasil.png" alt="Logo Sabor do Brasil" width="100">
+        <h2>Sabor do Brasil</h2>
+        <div class="linha-cor"></div>
+        <p>Likes Gerais: <span id="total-likes">0</span></p>
+        <p>Dislikes Gerais: <span id="total-dislikes">0</span></p>
+    </div>
+    <div class="main">
+        <h2>Nossos Pratos Deliciosos</h2>
+        <div id="lista-de-pratos">
+            </div>
+    </div>
+    <div class="login">
+        <button class="login-button">Entrar</button>
+    </div>
 
-<p>Single Page Application (SPA) que listará
-    todos os pratos disponíveis para interação. Essa SPA será exibida para o usuário quando ele
-    executar/acessar o site. A imagem a seguir ilustra um exemplo de como essa SPA poderia ser
-    implementada:</p>
-    <img src="img/SPA.jpg">
+    <div class="usuario-logado" id="usuario-logado">
+        <h2>Bem-vindo, <span id="nome-usuario-logado"></span></h2>
+        <p>Email: <span id="email-usuario-logado"></span></p>
+        <button class="logout-button" id="logout-button">Logout</button>
+    </div>
 
-<!--1. O body da página está dividido bidimensional três colunas.</li>
- 2. A primeira coluna é referente ao componente perfil com as informações da empresa sabor do brasil:
-    2.1. Na área perfil deve conter a logo "logo_sabor_do_brasil.png" o nome da empresa e uma linha da cor
-    #D97014, verificar a imagem na pasta anexos.
-    2.2. Na área perfil deverá conter o número geral de likes e dislikes das publicações.
+    <div id="modal-login" style="display: none;">
+        <h2>Login</h2>
+        <div id="login-error-message" class="erro-mensagem">Usuário ou senha incorreto</div>
+        <div>
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" name="email">
+        </div>
+        <div>
+            <label for="login-senha">Senha:</label>
+            <input type="password" id="login-senha" name="senha">
+        </div>
+        <div class="botoes-login">
+            <button id="cancelar-login" class="botao-cancelar">Cancelar</button>
+            <button id="entrar-login" class="botao-entrar">Entrar</button>
+        </div>
+    </div>
 
-3. A segunda coluna é referente ao componente main (principal) onde contém as publicações da
-    empresa.
-    3.1. O componente main deverá conter uma borda sólida com a cor #C2BEBE de acordo com a imagem
-    “index.png” que se encontra na pasta anexos;
-    3.2. Na área do main (principal) deverá conter cabeçalho com um título na parte superior,
-    centralizado e com a cor #000000;
-    3.3. Na área do main (principal) deverá conter as publicações da empresa de acordo com as
-    informações;
-    3.4. Cada publicação deve apresentar uma imagem do prato gastronómico, o título alinhado à esquerda e
-    uma legenda contendo local e cidade de acordo com a imagem “index.png” que se encontra na pasta
-    anexos;
-    3.5. Cada publicação de prato deve apresentar os ícones “flecha_cima_vazia.svg”,
-    “flecha_baixo_vazia.svg”, “chat.svg”, permitindo que o usuário faça interação. (Observação: os
-    arquivos .svg encontram-se na pasta anexos);
-    3.6. Ao lado de cada ícone deve conter a quantidade de interação referente ao like, deslike e comentário;</li>
+    <div id="modal-overlay" style="display: none;"></div>
 
-4. A terceira coluna é referente ao componente login da SPA e contém um botão com os dizeres “Entrar”
-    na cor #FFFFFF em negrito e a cor de fundo #D97014.</li>
+    <footer class="rodape">
+        Sabor do Brasil
+        Copyright-2024
+    </footer>
 
-5. O componente rodapé deverá estar na parte inferior da SPA ocupando as 3 colunas e possui a cor de
-    fonte #FFFFFF e cor de fundo #D97014.
-    5.1. Na área do rodapé deve conter a texto “Sabor do Brasil” seguido dos ícones das redes
-    “Instagram.svg”, “Twitter.svg”, “Whatsapp.svg”, “Globe.svg” e o texto “Copyright-2024”. (Observação:
-    os arquivos .svg encontram-se na pasta anexos).</li>
+    <script>
+        const modalLogin = document.getElementById('modal-login');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const btnEntrarPrincipal = document.querySelector('.login-button');
+        const btnCancelarLogin = document.getElementById('cancelar-login');
+        const btnEntrarLogin = document.getElementById('entrar-login');
+        const loginEmailInput = document.getElementById('login-email');
+        const loginSenhaInput = document.getElementById('login-senha');
+        const loginErrorMessage = document.getElementById('login-error-message');
 
-6. O usuário só poderá dar like, deslike e comentar as publicações caso ele esteja logado. Então, se ele
-    clicar em qualquer desses ícones sem estar logado deve ser exibido o popup/modal login.
+        //Elementos da página de usuário logado
+        const usuarioLogadoDiv = document.getElementById('usuario-logado');
+        const nomeUsuarioLogadoSpan = document.getElementById('nome-usuario-logado');
+        const emailUsuarioLogadoSpan = document.getElementById('email-usuario-logado');
+        const logoutButton = document.getElementById('logout-button');
 
-7. Sempre que a página for carregada o número de likes, deslikes e comentários devem ser exibidos para
-    cada publicação. Isso significa que essas informações devem ser persistidas no banco de dados, evitando
-    que elas se percam ao recarregar a página.
-8. A fotografia e nome da empresa na área de perfil devem ser carregados de acordo com as informações
-    persistidas no banco de dados referente aos dados da empresa.
-9. A informações gerais de likes na área de perfil deve ser carregado de acordo com as informações
-    persistidas no banco de dados referente aos dados da empresa.
-10. A informações gerais de dislikes na área de perfil deve ser carregada de acordo com as informações
-    persistidas no banco de dados referente aos dados da empresa.-->
+        function mostrarModalLogin() {
+            modalLogin.style.display = 'block';
+            modalOverlay.style.display = 'block';
+        }
+
+        function fecharModalLogin() {
+            modalLogin.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            resetarFormularioLogin();
+        }
+
+        function resetarFormularioLogin() {
+            loginEmailInput.value = '';
+            loginSenhaInput.value = '';
+            loginEmailInput.classList.remove('erro-input');
+            loginSenhaInput.classList.remove('erro-input');
+            loginErrorMessage.style.display = 'none';
+        }
+
+        // Mostrar modal ao clicar no botão "Entrar" principal
+        btnEntrarPrincipal.addEventListener('click', mostrarModalLogin);
+        btnCancelarLogin.addEventListener('click', fecharModalLogin);
+        modalOverlay.addEventListener('click', fecharModalLogin); // Fechar ao clicar fora do modal
+
+        // Lógica para verificar se o usuário está logado
+        let usuarioLogado = false;
+        let usuarioAtual = null; // Armazenar os dados do usuário logado
+
+        // Função para verificar o login e direcionar o usuário
+        async function realizarLogin(email, senha) {
+            loginErrorMessage.style.display = 'none'; // Esconde a mensagem de erro antes de verificar
+
+            if (!email) {
+                loginEmailInput.classList.add('erro-input');
+                return;
+            }
+            if (!senha) {
+                loginSenhaInput.classList.add('erro-input');
+                return;
+            }
+
+            const loginData = { email: email, senha: senha };
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(loginData),
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    console.log('Login bem-sucedido:', userData);
+                    usuarioLogado = true;
+                    usuarioAtual = userData; // Armazena os dados do usuário
+                    armazenarUsuarioLogado(userData); // Persiste o login
+                    fecharModalLogin();
+                    mostrarPaginaUsuarioLogado(userData); // Exibe a página de usuário logado
+                } else {
+                    const error = await response.json();
+                    console.error('Erro no login:', error);
+                    loginErrorMessage.textContent = error.message || 'Usuário ou senha incorreto';
+                    loginErrorMessage.style.display = 'block';
+                    if (error.field === 'email') {
+                        loginEmailInput.classList.add('erro-input');
+                    } else if (error.field === 'senha') {
+                        loginSenhaInput.classList.add('erro-input');
+                    }
+                }
+            } catch (error) {
+                console.error('Erro na comunicação com o servidor:', error);
+                loginErrorMessage.textContent = 'Erro ao tentar logar.';
+                loginErrorMessage.style.display = 'block';
+            }
+        }
+
+        function mostrarPaginaUsuarioLogado(usuario) {
+            // Esconde elementos não necessários
+            document.querySelector('.login').style.display = 'none';
+            document.querySelector('.main').style.display = 'none';
+            btnEntrarPrincipal.style.display = 'none';
+
+            // Exibe a página de usuário logado
+            usuarioLogadoDiv.style.display = 'block';
+            nomeUsuarioLogadoSpan.textContent = usuario.nome;
+            emailUsuarioLogadoSpan.textContent = usuario.email; // Certifique-se de que seu backend retorna o email
+
+            //Atualiza a interface
+            buscarPratos();
+        }
+
+        function armazenarUsuarioLogado(usuario) {
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+        }
+
+        function obterUsuarioLogado() {
+            const usuarioLogadoStr = localStorage.getItem('usuarioLogado');
+            if (usuarioLogadoStr) {
+                return JSON.parse(usuarioLogadoStr);
+            }
+            return null;
+        }
+
+        function removerUsuarioLogado() {
+            localStorage.removeItem('usuarioLogado');
+            usuarioLogado = false;
+            usuarioAtual = null;
+            //Esconde a página de usuário logado e mostra o resto da página
+            usuarioLogadoDiv.style.display = 'none';
+            document.querySelector('.login').style.display = 'block';
+            document.querySelector('.main').style.display = 'block';
+            btnEntrarPrincipal.style.display = 'block';
+
+            resetarFormularioLogin();
+        }
+
+        // Verifica se o usuário já está logado ao carregar a página
+        const usuarioLogadoNaPagina = obterUsuarioLogado();
+        if (usuarioLogadoNaPagina) {
+            usuarioLogado = true;
+            usuarioAtual = usuarioLogadoNaPagina;
+            mostrarPaginaUsuarioLogado(usuarioLogadoNaPagina);
+        }
+
+
+        // Adiciona event listeners aos ícones de interação para verificar o login
+        document.getElementById('lista-de-pratos').addEventListener('click', function(event) {
+            const target = event.target;
+            if ((target.alt === 'Like' || target.alt === 'Dislike' || target.alt === 'Comentários') && !usuarioLogado) {
+                mostrarModalLogin();
+            }
+        });
+
+        // Evento de clique do botão Entrar no modal
+        btnEntrarLogin.addEventListener('click', function() {
+            const email = loginEmailInput.value;
+            const senha = loginSenhaInput.value;
+            realizarLogin(email, senha);
+        });
+
+        //Evento de clique do botão Logout
+        logoutButton.addEventListener('click', function(){
+            removerUsuarioLogado();
+        })
+
+        async function buscarPratos() {
+            try {
+                const response = await fetch('/api/pratos');
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status}`);
+                }
+                const pratos = await response.json();
+                exibirPratos(pratos);
+                atualizarTotais(pratos);
+            } catch (error) {
+                console.error("Erro ao buscar os pratos:", error);
+                document.getElementById('lista-de-pratos').innerHTML = '<p>Erro ao carregar os pratos.</p>';
+            }
+        }
+
+        function exibirPratos(pratos) {
+            const listaDePratosDiv = document.getElementById('lista-de-pratos');
+            listaDePratosDiv.innerHTML = ''; // Limpa qualquer conteúdo anterior
+
+            pratos.forEach(prato => {
+                const pratoDiv = document.createElement('div');
+                pratoDiv.classList.add('prato');
+
+                const imagem = document.createElement('img');
+                imagem.src = prato.foto;
+                imagem.alt = prato.nomePrato;
+
+                const infoDiv = document.createElement('div');
+                const titulo = document.createElement('h3');
+                titulo.textContent = prato.nomePrato;
+                titulo.style.textAlign = 'left';
+
+                const legenda = document.createElement('p');
+                legenda.textContent = `${prato.local}, ${prato.cidade}`;
+
+                const interacoesDiv = document.createElement('div');
+                interacoesDiv.classList.add('interacoes');
+
+                let interacoesHTML = '';
+                if (usuarioLogado) {
+                    interacoesHTML = `
+                        <img src="/images/flecha_cima_vazia.svg" alt="Like" width="20" data-prato-id="${prato.idPrato}"> <span>${prato.likes}</span>
+                        <img src="/images/flecha_baixo_vazia.svg" alt="Dislike" width="20" data-prato-id="${prato.idPrato}"> <span>${prato.dislikes}</span>
+                        <img src="/images/chat.svg" alt="Comentários" width="20" data-prato-id="${prato.idPrato}"> <span>${prato.comentarios}</span>
+                    `;
+                } else {
+                    interacoesHTML = `
+                        <img src="/images/flecha_cima_vazia.svg" alt="Like" width="20"> <span>${prato.likes}</span>
+                        <img src="/images/flecha_baixo_vazia.svg" alt="Dislike" width="20"> <span>${prato.dislikes}</span>
+                        <img src="/images/chat.svg" alt="Comentários" width="20"> <span>${prato.comentarios}</span>
+                    `;
+                }
+                interacoesDiv.innerHTML = interacoesHTML;
+
+
+                infoDiv.appendChild(titulo);
+                infoDiv.appendChild(legenda);
+
+                pratoDiv.appendChild(imagem);
+                pratoDiv.appendChild(infoDiv);
+                pratoDiv.appendChild(interacoesDiv);
+
+                listaDePratosDiv.appendChild(pratoDiv);
+            });
+        }
+
+        function atualizarTotais(pratos) {
+            let totalLikes = 0;
+            let totalDislikes = 0;
+            pratos.forEach(prato => {
+                totalLikes += prato.likes;
+                totalDislikes += prato.dislikes;
+            });
+            document.getElementById('total-likes').textContent = totalLikes;
+            document.getElementById('total-dislikes').textContent = totalDislikes;
+        }
+
+        // Chama a função para buscar os pratos quando a página carregar
+        window.onload = buscarPratos;
+    </script>
+</body>
+</html>
