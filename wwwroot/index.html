@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!--CSS Bootstrap-->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">  
+     <!--CSS Local-->
+    <link rel="stylesheet" href="../Assets/style.css">
+    <!--GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+
     <title>Sabor do Brasil - Pratos</title>
     <style>
         /* Estilos básicos para o layout */
@@ -82,12 +91,15 @@
         #modal-login h2 {
             margin-bottom: 15px;
             text-align: center;
-            color: #333;
+            font-family: "Rowdies", sans-serif; 
+            color: #3f1e01;
         }
         #modal-login label {
             display: block;
             margin-bottom: 5px;
             color: #555;
+            font-family: "Rowdies", sans-serif; 
+            color: #3f1e01;
             font-weight: bold;
             font-size: 0.9em;
         }
@@ -187,15 +199,78 @@
 </head>
 <body>
     <div class="perfil">
-        <img src="/images/logo_sabor_do_brasil.png" alt="Logo Sabor do Brasil" width="100">
+        <img src="./img/Logo S. do Brasil.png" alt="Logo Sabor do Brasil" width="200">
         <h2>Sabor do Brasil</h2>
         <div class="linha-cor"></div>
         <p>Likes Gerais: <span id="total-likes">0</span></p>
         <p>Dislikes Gerais: <span id="total-dislikes">0</span></p>
     </div>
-    <div class="main">
-        <h2>Nossos Pratos Deliciosos</h2>
+
+    <div class="main" style="text-align: center;">
+        <h1>Nossos Pratos Deliciosos</h1>
         <div id="lista-de-pratos">
+            <div class="prato-card">
+                <img src="img/moquecaCapixaba.png" alt="Feijão Tropeiro" class="prato-imagem">
+                <div class="info-container">
+                    <h2 class="prato-nome">Moqueca Capixaba</h2>
+                    <p class="prato-local">Fundão, ES</p>
+                </div>
+                <div class="interacoes">
+                    <div class="likes-dislikes">
+                        <div class="like-count">
+                        <i class="bi bi-hand-thumbs-up"></i> <span>10</span>
+                        </div>
+                        <div class="dislike-count">
+                        <i class="bi bi-hand-thumbs-down"></i> <span>2</span>
+                        </div>
+                    </div>
+                    <div class="comentario-count">
+                        <i class="bi bi-chat-dots"></i> <span>5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prato-card">
+                <img src="img/panquecaAoXarope.png" alt="Feijão Tropeiro" class="prato-imagem">
+                <div class="info-container">
+                    <h2 class="prato-nome">Panqueca ao Xarope</h2>
+                    <p class="prato-local">Gramado, RS</p>
+                </div>
+                <div class="interacoes">
+                    <div class="likes-dislikes">
+                        <div class="like-count">
+                        <i class="bi bi-hand-thumbs-up"></i> <span>10</span>
+                        </div>
+                        <div class="dislike-count">
+                        <i class="bi bi-hand-thumbs-down"></i> <span>2</span>
+                        </div>
+                    </div>
+                    <div class="comentario-count">
+                        <i class="bi bi-chat-dots"></i> <span>5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prato-card">
+                <img src="img/batidasTropicais.png" alt="Feijão Tropeiro" class="prato-imagem">
+                <div class="info-container">
+                    <h2 class="prato-nome">Batidas Tropicais</h2>
+                    <p class="prato-local">Leblon, RJ</p>
+                </div>
+                <div class="interacoes">
+                    <div class="likes-dislikes">
+                        <div class="like-count">
+                        <i class="bi bi-hand-thumbs-up"></i> <span>10</span>
+                        </div>
+                        <div class="dislike-count">
+                        <i class="bi bi-hand-thumbs-down"></i> <span>2</span>
+                        </div>
+                    </div>
+                    <div class="comentario-count">
+                        <i class="bi bi-chat-dots"></i> <span>5</span>
+                    </div>
+                </div>
+            </div>
             </div>
     </div>
     <div class="login">
@@ -229,7 +304,7 @@
 
     <footer class="rodape">
         Sabor do Brasil
-        Copyright-2024
+        Copyright-2025
     </footer>
 
     <script>
@@ -395,72 +470,6 @@
             removerUsuarioLogado();
         })
 
-        async function buscarPratos() {
-            try {
-                const response = await fetch('/api/pratos');
-                if (!response.ok) {
-                    throw new Error(`Erro na requisição: ${response.status}`);
-                }
-                const pratos = await response.json();
-                exibirPratos(pratos);
-                atualizarTotais(pratos);
-            } catch (error) {
-                console.error("Erro ao buscar os pratos:", error);
-                document.getElementById('lista-de-pratos').innerHTML = '<p>Erro ao carregar os pratos.</p>';
-            }
-        }
-
-        function exibirPratos(pratos) {
-            const listaDePratosDiv = document.getElementById('lista-de-pratos');
-            listaDePratosDiv.innerHTML = ''; // Limpa qualquer conteúdo anterior
-
-            pratos.forEach(prato => {
-                const pratoDiv = document.createElement('div');
-                pratoDiv.classList.add('prato');
-
-                const imagem = document.createElement('img');
-                imagem.src = prato.foto;
-                imagem.alt = prato.nomePrato;
-
-                const infoDiv = document.createElement('div');
-                const titulo = document.createElement('h3');
-                titulo.textContent = prato.nomePrato;
-                titulo.style.textAlign = 'left';
-
-                const legenda = document.createElement('p');
-                legenda.textContent = `${prato.local}, ${prato.cidade}`;
-
-                const interacoesDiv = document.createElement('div');
-                interacoesDiv.classList.add('interacoes');
-
-                let interacoesHTML = '';
-                if (usuarioLogado) {
-                    interacoesHTML = `
-                        <img src="/images/flecha_cima_vazia.svg" alt="Like" width="20" data-prato-id="${prato.idPrato}"> <span>${prato.likes}</span>
-                        <img src="/images/flecha_baixo_vazia.svg" alt="Dislike" width="20" data-prato-id="${prato.idPrato}"> <span>${prato.dislikes}</span>
-                        <img src="/images/chat.svg" alt="Comentários" width="20" data-prato-id="${prato.idPrato}"> <span>${prato.comentarios}</span>
-                    `;
-                } else {
-                    interacoesHTML = `
-                        <img src="/images/flecha_cima_vazia.svg" alt="Like" width="20"> <span>${prato.likes}</span>
-                        <img src="/images/flecha_baixo_vazia.svg" alt="Dislike" width="20"> <span>${prato.dislikes}</span>
-                        <img src="/images/chat.svg" alt="Comentários" width="20"> <span>${prato.comentarios}</span>
-                    `;
-                }
-                interacoesDiv.innerHTML = interacoesHTML;
-
-
-                infoDiv.appendChild(titulo);
-                infoDiv.appendChild(legenda);
-
-                pratoDiv.appendChild(imagem);
-                pratoDiv.appendChild(infoDiv);
-                pratoDiv.appendChild(interacoesDiv);
-
-                listaDePratosDiv.appendChild(pratoDiv);
-            });
-        }
-
         function atualizarTotais(pratos) {
             let totalLikes = 0;
             let totalDislikes = 0;
@@ -472,8 +481,62 @@
             document.getElementById('total-dislikes').textContent = totalDislikes;
         }
 
-        // Chama a função para buscar os pratos quando a página carregar
-        window.onload = buscarPratos;
-    </script>
+    async function buscarPratos() {
+        try {
+            const response = await fetch('/api/pratos');
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+            const pratos = await response.json();
+            exibirPratos(pratos);
+            atualizarTotais(pratos);
+        } catch (error) {
+            console.error("Erro ao buscar os pratos:", error);
+            //document.getElementById('lista-de-pratos').innerHTML = '<p>Erro ao carregar os pratos.</p>'; // Remova ou comente esta linha
+        }
+    }
+
+    function exibirPratos(pratos) {
+        const listaDePratosDiv = document.getElementById('lista-de-pratos');
+        listaDePratosDiv.innerHTML = ''; // Limpa qualquer conteúdo anterior
+
+        pratos.forEach(prato => {
+            const pratoCard = document.createElement('div');
+            pratoCard.classList.add('prato-card');
+
+            pratoCard.innerHTML = `
+                <img src="${prato.foto}" alt="${prato.nomePrato}" class="prato-imagem">
+                <div class="info-container">
+                    <h2 class="prato-nome">${prato.nomePrato}</h2>
+                    <p class="prato-local">Local: ${prato.local}, ${prato.cidade}</p>
+                </div>
+                <div class="interacoes">
+                    <img src="flecha_cima_vazia.svg" alt="Like"> <span>${prato.likes}</span>
+                    <img src="flecha_baixo_vazia.svg" alt="Dislike"> <span>${prato.dislikes}</span>
+                    <img src="chat.svg" alt="Comentários"> <span>${prato.comentarios}</span>
+                </div>
+            `;
+
+            listaDePratosDiv.appendChild(pratoCard);
+        });
+    }
+
+    function atualizarTotais(pratos) {
+        let totalLikes = 0;
+        let totalDislikes = 0;
+        pratos.forEach(prato => {
+            totalLikes += prato.likes;
+            totalDislikes += prato.dislikes;
+        });
+        document.getElementById('total-likes').textContent = totalLikes;
+        document.getElementById('total-dislikes').textContent = totalDislikes;
+    }
+
+    // Chama a função para buscar os pratos quando a página carregar
+    window.onload = buscarPratos;
+</script>
+
 </body>
+<!--SCRIPT BOOTSTRAP-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>    
 </html>
