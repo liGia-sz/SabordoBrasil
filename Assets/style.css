@@ -141,3 +141,26 @@
             max-height: 120px;
         }
     }
+
+    .rodape {
+      background-color: #D2691E; /* Cor de fundo marrom-alaranjada */
+      color: white; /* Cor do texto branco */
+      padding: 15px 20px; /* Espaçamento interno superior/inferior e esquerda/direita */
+    }
+    
+    .container-rodape {
+      display: flex; /* Alinha os itens na horizontal */
+      justify-content: space-between; /* Espaço igual entre os itens */
+      align-items: center; /* Alinha os itens verticalmente ao centro */
+      max-width: 1200px; /* Largura máxima do conteúdo do footer (opcional) */
+      margin: 0 auto; /* Centraliza o conteúdo do footer (opcional) */
+    }
+    
+    .redes-sociais i {
+      font-size: 1.5em; /* Tamanho dos ícones */
+      margin-left: 15px; /* Espaçamento entre os ícones */
+    }
+    
+    .redes-sociais i:first-child {
+      margin-left: 25px; /* Adiciona um pouco mais de espaço no primeiro ícone */
+    }
