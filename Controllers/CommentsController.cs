@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using SabordoBrasil.Models;
-using SabordoBrasil.Services;
 
 namespace SabordoBrasil.Controllers
 {

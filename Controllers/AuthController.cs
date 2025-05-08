@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SabordoBrasil.Models;
 
 namespace SabordoBrasil.Controllers
 {
@@ -9,25 +10,23 @@ namespace SabordoBrasil.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IPasswordHasher<UsuarioDTO> _passwordHasher;
-
-        public SeuDbContext Context { get; }
+        private readonly SeuDbContext _context;
 
         public AuthController(SeuDbContext context, IPasswordHasher<UsuarioDTO> passwordHasher)
         {
-            Context = context;
-            _passwordHasher = passwordHasher;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UsuarioDTO usuarioDTO)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(usuarioDTO.Nome) || string.IsNullOrWhiteSpace(usuarioDTO.Email) || string.IsNullOrWhiteSpace(usuarioDTO.Senha))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Todos os campos são obrigatórios.");
             }
 
-            // Verifique se o email já existe
-            if (await Context.Usuarios.AnyAsync(u => u.Email == usuarioDTO.Email))
+            if (await _context.Usuarios.AnyAsync(u => u.Email == usuarioDTO.Email))
             {
                 return Conflict("Email já está em uso.");
             }
@@ -41,8 +40,8 @@ namespace SabordoBrasil.Controllers
 
             novoUsuario.Senha = _passwordHasher.HashPassword(novoUsuario, usuarioDTO.Senha);
 
-            Context.Usuarios.Add(novoUsuario);
-            await Context.SaveChangesAsync();
+            _context.Usuarios.Add(novoUsuario);
+            await _context.SaveChangesAsync();
 
             return Ok(new { Message = "Usuário registrado com sucesso!" });
         }
@@ -50,12 +49,12 @@ namespace SabordoBrasil.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(loginDTO.Email) || string.IsNullOrWhiteSpace(loginDTO.Senha))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Email e senha são obrigatórios.");
             }
 
-            var usuario = await Context.Usuarios.FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
             if (usuario == null)
             {
                 return Unauthorized("Email ou senha inválidos.");
