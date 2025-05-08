@@ -1,37 +1,121 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization; // Se você precisar proteger as rotas
 
-// Modelo para representar um Prato (deve corresponder à sua tabela no banco)
-public class PratoDto
+// Modelo para representar um Prato
+public class PratoResponse
 {
     public int IdPrato { get; set; }
     public string NomePrato { get; set; }
     public string Descricao { get; set; }
     public string Foto { get; set; }
-    public string Local { get; set; } // Supondo que você tenha essa informação
-    public string Cidade { get; set; } // Supondo que você tenha essa informação
+    public string Local { get; set; }
+    public string Cidade { get; set; }
     public int Likes { get; set; }
     public int Dislikes { get; set; }
     public int Comentarios { get; set; }
+    public bool UsuarioCurtiu { get; set; } // Indica se o usuário logado curtiu
+    public bool UsuarioDescurtiu { get; set; } // Indica se o usuário logado descurtiu
 }
 
 [ApiController]
 [Route("api/pratos")]
 public class PratosController : ControllerBase
 {
-    // Aqui você injetaria seu serviço ou repositório para acessar os dados do banco
-    private static readonly List<PratoDto> _pratosSimulados = new List<PratoDto>()
+    private readonly IPratoService _pratoService; // Sua interface de serviço para pratos
+    // Supondo que você tenha acesso ao ID do usuário logado de alguma forma (autenticação)
+    // Para este exemplo, vamos passar o ID do usuário como parâmetro nas requisições.
+
+    public PratosController(IPratoService pratoService)
     {
-        new PratoDto { IdPrato = 1, NomePrato = "Feijão Tropeiro", Descricao = "Delicioso...", Foto = "/images/feijaotropeiro.jpg", Local = "BH", Cidade = "MG", Likes = 10, Dislikes = 2, Comentarios = 5 },
-        new PratoDto { IdPrato = 2, NomePrato = "Lasanha", Descricao = "Clássica...", Foto = "/images/lasanha.jpg", Local = "SP", Cidade = "SP", Likes = 15, Dislikes = 1, Comentarios = 8 },
-        // ... adicione mais pratos simulados
-    };
+        _pratoService = pratoService;
+    }
 
     [HttpGet]
-    public ActionResult<IEnumerable<PratoDto>> GetPratos()
+    public async Task<ActionResult<IEnumerable<PratoResponse>>> GetPratos([FromQuery] int? usuarioId)
     {
-        // Em um cenário real, você buscaria os dados do banco aqui
-        return Ok(_pratosSimulados);
+        if (!usuarioId.HasValue)
+        {
+            // Se não houver usuário logado, retorne os pratos sem informações de interação do usuário
+            var pratos = await _pratoService.ListarPratos();
+            return Ok(pratos.Select(p => new PratoResponse
+            {
+                IdPrato = p.IdPrato,
+                NomePrato = p.NomePrato,
+                Descricao = p.Descricao,
+                Foto = p.Foto,
+                Local = p.Local,
+                Cidade = p.Cidade,
+                Likes = p.Likes,
+                Dislikes = p.Dislikes,
+                Comentarios = p.Comentarios,
+                UsuarioCurtiu = false,
+                UsuarioDescurtiu = false
+            }));
+        }
+        else
+        {
+            // Se houver um usuário logado, retorne os pratos com informações de interação
+            var pratosComInteracao = await _pratoService.ListarPratosComInteracao(usuarioId.Value);
+            return Ok(pratosComInteracao.Select(p => new PratoResponse
+            {
+                IdPrato = p.IdPrato,
+                NomePrato = p.NomePrato,
+                Descricao = p.Descricao,
+                Foto = p.Foto,
+                Local = p.Local,
+                Cidade = p.Cidade,
+                Likes = p.Likes,
+                Dislikes = p.Dislikes,
+                Comentarios = p.Comentarios,
+                UsuarioCurtiu = p.UsuarioCurtiu,
+                UsuarioDescurtiu = p.UsuarioDescurtiu
+            }));
+        }
+    }
+
+    [HttpPost("{id}/like")]
+    public async Task<IActionResult> LikePrato(int id, [FromQuery] int usuarioId)
+    {
+        var resultado = await _pratoService.AdicionarLike(id, usuarioId);
+        if (resultado)
+        {
+            return Ok(); // Ou retorne o novo número de likes
+        }
+        return BadRequest("Não foi possível dar like.");
+    }
+
+    [HttpDelete("{id}/like")]
+    public async Task<IActionResult> UnlikePrato(int id, [FromQuery] int usuarioId)
+    {
+        var resultado = await _pratoService.RemoverLike(id, usuarioId);
+        if (resultado)
+        {
+            return Ok(); // Ou retorne o novo número de likes
+        }
+        return BadRequest("Não foi possível remover o like.");
+    }
+
+    [HttpPost("{id}/dislike")]
+    public async Task<IActionResult> DislikePrato(int id, [FromQuery] int usuarioId)
+    {
+        var resultado = await _pratoService.AdicionarDislike(id, usuarioId);
+        if (resultado)
+        {
+            return Ok(); // Ou retorne o novo número de dislikes
+        }
+        return BadRequest("Não foi possível dar dislike.");
+    }
+
+    [HttpDelete("{id}/dislike")]
+    public async Task<IActionResult> UndislikePrato(int id, [FromQuery] int usuarioId)
+    {
+        var resultado = await _pratoService.RemoverDislike(id, usuarioId);
+        if (resultado)
+        {
+            return Ok(); // Ou retorne o novo número de dislikes
+        }
+        return BadRequest("Não foi possível remover o dislike.");
     }
 }

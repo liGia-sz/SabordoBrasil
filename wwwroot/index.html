@@ -3,78 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!--CSS Bootstrap-->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">  
-     <!--CSS Local-->
-    <link rel="stylesheet" href="../Assets/style.css">
-    <!--GOOGLE FONTS-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
-
-    <title>Sabor do Brasil - Pratos</title>
+    <title>Sistema de Avaliação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        /* Estilos básicos para o layout */
+        /* Estilos para a página (adapte conforme necessário) */
         body {
-            display: grid;
-            grid-template-columns: 20% 60% 20%;
-            font-family: sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
-        .perfil {
-            /* Estilos para a primeira coluna */
+        #lista-de-pratos {
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .main {
-            /* Estilos para a segunda coluna */
-            padding: 20px;
-            border: 1px solid #C2BEBE;
-        }
-        .login {
-            /* Estilos para a terceira coluna */
-            padding: 20px;
-            text-align: center;
-        }
-        .prato {
-            border: 1px solid #eee;
+        .prato-card {
+            border: 1px solid #ddd;
+            padding: 15px;
             margin-bottom: 15px;
-            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
             display: flex;
-            align-items: center;
+            flex-direction: column;
         }
-        .prato img {
-            max-width: 100px;
-            height: auto;
-            margin-right: 10px;
-        }
-        .interacoes {
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-        }
-        .rodape {
-            grid-column: 1 / -1;
-            background-color: #D97014;
-            color: #FFFFFF;
-            padding: 10px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .linha-cor {
-            height: 5px;
-            background-color: #D97014;
-            margin: 10px 0;
-        }
-        .login-button {
-            background-color: #D97014;
-            color: #FFFFFF;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: none;
+        .prato-imagem {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
             cursor: pointer;
         }
+        .info-container {
+            margin-top: 10px;
+        }
+        .prato-nome {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        .prato-local {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .interacoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .like-button, .dislike-button, .comment-button {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .comentarios-container {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .novo-comentario {
+            margin-bottom: 10px;
+        }
+        #texto-comentario {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: none;
+        }
+        #botao-comentar {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        #lista-de-comentarios {
+            margin-top: 10px;
+        }
+        .comentario {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+            position: relative; /* Para posicionar os ícones de ação */
+        }
 
-        /* Estilos para o Modal de Login */
-        #modal-login {
+        .comentario-header {
+            display: flex;
+            justify-content: space-between; /* Coloca o nome à esquerda e as ações à direita */
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .comentario-acoes {
+            display: flex;
+            gap: 10px; /* Espaçamento entre os ícones */
+        }
+        .editar-comentario, .deletar-comentario {
+            cursor: pointer;
+            width: 20px; /* Tamanho desejado para os ícones */
+            height: 20px;
+        }
+
+        .editar-comentario {
+            color: #FFFFFF;
+        }
+
+        .deletar-comentario {
+          color: #FF0000;
+        }
+
+        .botao-atualizar-comentario {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+            margin-top: 5px;
+        }
+
+        /* Estilos para o modal de exclusão (adapte conforme necessário) */
+        #modal-excluir-comentario {
             display: none;
             position: fixed;
             top: 50%;
@@ -82,469 +134,462 @@
             transform: translate(-50%, -50%);
             background-color: white;
             padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            width: 300px; /* Largura fixa para o modal */
             border-radius: 8px;
-        }
-        #modal-login h2 {
-            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            width: 300px;
             text-align: center;
-            font-family: "Rowdies", sans-serif; 
-            color: #3f1e01;
         }
-        #modal-login label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-family: "Rowdies", sans-serif; 
-            color: #3f1e01;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-        #modal-login input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box; /* Garante que o padding não aumenta a largura total */
-        }
-        #modal-login input:focus {
-            border-color: #D97014;
-            outline: none; /* Remove a borda padrão do navegador */
-        }
-        #modal-login .erro-input {
-            border-color: red !important;
-        }
-        #modal-login .erro-mensagem {
-            color: red;
+        #modal-excluir-comentario h3 {
             margin-bottom: 10px;
-            display: none;
-            font-size: 0.9em;
         }
-        #modal-login .botoes-login {
+        #modal-excluir-comentario p {
+            margin-bottom: 15px;
+        }
+        .botoes-excluir {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             gap: 10px;
             margin-top: 10px;
+
         }
-        #modal-login .botao-cancelar {
-            background-color: transparent;
-            border: 1px solid #D97014;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            color: #D97014;
-        }
-        #modal-login .botao-cancelar:hover {
-            background-color: #f8f8f8; /* Leve feedback visual ao passar o mouse */
-        }
-        #modal-login .botao-entrar {
-            background-color: #D97014;
-            color: #FFFFFF;
+        .botao-cancelar, .botao-entrar {
             padding: 8px 15px;
             border: none;
-            cursor: pointer;
             border-radius: 4px;
-            font-weight: bold;
+            cursor: pointer;
         }
-        #modal-login .botao-entrar:hover {
-            background-color: #c05604; /* Escurece um pouco ao passar o mouse */
+        .botao-cancelar {
+            background-color: #ccc;
+            color: #333;
         }
-
-        #modal-overlay {
+        .botao-entrar {
+            background-color: #D97014;
+            color: #fff;
+        }
+        #modal-overlay-excluir {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0,0,0,0.5);
             z-index: 999;
-        }
-
-        .usuario-logado {
-            display: none; /* Inicialmente escondido */
-            padding: 20px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .usuario-logado h2 {
-            color: #D97014;
-            margin-bottom: 10px;
-        }
-        .usuario-logado p {
-            margin-bottom: 5px;
-            color: #333;
-        }
-        .logout-button {
-            background-color: #D97014;
-            color: #FFFFFF;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        .logout-button:hover {
-            background-color: #c05604;
         }
     </style>
 </head>
-    
 <body>
-    <div class="perfil">
-        <img src="./img/Logo S. do Brasil.png" alt="Logo Sabor do Brasil" width="200">
-        <h2>Sabor do Brasil</h2>
-        <div class="linha-cor"></div>
-        <p>Likes Gerais: <span id="total-likes">0</span></p>
-        <p>Dislikes Gerais: <span id="total-dislikes">0</span></p>
-    </div>
-
-    <div class="main" style="text-align: center;">
-        <h1>Nossos Pratos Deliciosos</h1>
-        <div id="lista-de-pratos">
-            <div class="prato-card">
-                <img src="img/moquecaCapixaba.png" alt="Feijão Tropeiro" class="prato-imagem">
-                <div class="info-container">
-                    <h2 class="prato-nome">Moqueca Capixaba</h2>
-                    <p class="prato-local">Fundão, ES</p>
-                </div>
-                <div class="interacoes">
-                    <div class="likes-dislikes">
-                        <div class="like-count">
-                        <i class="bi bi-hand-thumbs-up"></i> <span>10</span>
-                        </div>
-                        <div class="dislike-count">
-                        <i class="bi bi-hand-thumbs-down"></i> <span>2</span>
-                        </div>
-                    </div>
-                    <div class="comentario-count">
-                        <i class="bi bi-chat-dots"></i> <span>5</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prato-card">
-                <img src="img/panquecaAoXarope.png" alt="Feijão Tropeiro" class="prato-imagem">
-                <div class="info-container">
-                    <h2 class="prato-nome">Panqueca ao Xarope</h2>
-                    <p class="prato-local">Gramado, RS</p>
-                </div>
-                <div class="interacoes">
-                    <div class="likes-dislikes">
-                        <div class="like-count">
-                        <i class="bi bi-hand-thumbs-up"></i> <span>10</span>
-                        </div>
-                        <div class="dislike-count">
-                        <i class="bi bi-hand-thumbs-down"></i> <span>2</span>
-                        </div>
-                    </div>
-                    <div class="comentario-count">
-                        <i class="bi bi-chat-dots"></i> <span>5</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prato-card">
-                <img src="img/batidasTropicais.png" alt="Feijão Tropeiro" class="prato-imagem">
-                <div class="info-container">
-                    <h2 class="prato-nome">Batidas Tropicais</h2>
-                    <p class="prato-local">Leblon, RJ</p>
-                </div>
-                <div class="interacoes">
-                    <div class="likes-dislikes">
-                        <div class="like-count">
-                        <i class="bi bi-hand-thumbs-up"></i> <span>10</span>
-                        </div>
-                        <div class="dislike-count">
-                        <i class="bi bi-hand-thumbs-down"></i> <span>2</span>
-                        </div>
-                    </div>
-                    <div class="comentario-count">
-                        <i class="bi bi-chat-dots"></i> <span>5</span>
-                    </div>
-                </div>
-            </div>
-            </div>
-    </div>
-    <div class="login">
-        <button class="login-button">Entrar</button>
-    </div>
-
-    <div class="usuario-logado" id="usuario-logado">
-        <h2>Bem-vindo, <span id="nome-usuario-logado"></span></h2>
-        <p>Email: <span id="email-usuario-logado"></span></p>
-        <button class="logout-button" id="logout-button">Logout</button>
-    </div>
+    <div id="lista-de-pratos">
+        </div>
 
     <div id="modal-login" style="display: none;">
-        <h2>Login</h2>
-        <div id="login-error-message" class="erro-mensagem">Usuário ou senha incorreto</div>
-        <div>
-            <label for="login-email">Email:</label>
-            <input type="email" id="login-email" name="email">
-        </div>
-        <div>
-            <label for="login-senha">Senha:</label>
-            <input type="password" id="login-senha" name="senha">
-        </div>
-        <div class="botoes-login">
-            <button id="cancelar-login" class="botao-cancelar">Cancelar</button>
-            <button id="entrar-login" class="botao-entrar">Entrar</button>
-        </div>
+        <h3>Faça Login</h3>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-senha" placeholder="Senha">
+        <button id="botao-login" class="botao-entrar">Entrar</button>
+        <button id="botao-cancelar-login" class="botao-cancelar">Cancelar</button>
     </div>
-
     <div id="modal-overlay" style="display: none;"></div>
 
-    <footer class="rodape">
-  <div class="container-rodape">
-    <span>Sabor do Brasil</span>
-    <div class="redes-sociais">
-      <i class="bi bi-instagram"></i>
-      <i class="bi bi-twitter-x"></i>
-      <i class="bi bi-whatsapp"></i>
-      <i class="bi bi-globe"></i>
+    <div id="modal-excluir-comentario" style="display: none;">
+        <h3>Confirmar Exclusão</h3>
+        <p>Tem certeza que deseja excluir este comentário?</p>
+        <div class="botoes-excluir">
+            <button id="botao-nao-excluir" class="botao-cancelar">Não</button>
+            <button id="botao-sim-excluir" class="botao-entrar">Sim</button>
+        </div>
     </div>
-    <span>Copyright - 2025</span>
-  </div>
-</footer>
+    <div id="modal-overlay-excluir" style="display: none;"></div>
+
 
     <script>
+        // Dados dos pratos (substitua pelos seus dados reais)
+        const pratos = [
+            { idPrato: 1, nomePrato: "Prato 1", descricao: "Descrição do Prato 1", foto: "https://via.placeholder.com/150", local: "Local 1", cidade: "Cidade 1", likes: 10, dislikes: 2, comentarios: 5 },
+            { idPrato: 2, nomePrato: "Prato 2", descricao: "Descrição do Prato 2", foto: "https://via.placeholder.com/150", local: "Local 2", cidade: "Cidade 2", likes: 5, dislikes: 1, comentarios: 2 },
+            { idPrato: 3, nomePrato: "Prato 3", descricao: "Descrição do Prato 3", foto: "https://via.placeholder.com/150", local: "Local 3", cidade: "Cidade 3", likes: 12, dislikes: 0, comentarios: 8 },
+        ];
+
+        let usuarioAtual = null; // Armazena o usuário logado
+
+        // Elementos do DOM
+        const listaDePratos = document.getElementById('lista-de-pratos');
         const modalLogin = document.getElementById('modal-login');
         const modalOverlay = document.getElementById('modal-overlay');
-        const btnEntrarPrincipal = document.querySelector('.login-button');
-        const btnCancelarLogin = document.getElementById('cancelar-login');
-        const btnEntrarLogin = document.getElementById('entrar-login');
         const loginEmailInput = document.getElementById('login-email');
         const loginSenhaInput = document.getElementById('login-senha');
-        const loginErrorMessage = document.getElementById('login-error-message');
+        const botaoLogin = document.getElementById('botao-login');
+        const botaoCancelarLogin = document.getElementById('botao-cancelar-login');
 
-        //Elementos da página de usuário logado
-        const usuarioLogadoDiv = document.getElementById('usuario-logado');
-        const nomeUsuarioLogadoSpan = document.getElementById('nome-usuario-logado');
-        const emailUsuarioLogadoSpan = document.getElementById('email-usuario-logado');
-        const logoutButton = document.getElementById('logout-button');
+        // Modal Excluir Comentario
+        let comentarioIdParaExcluir = null;
+        const modalExcluirComentario = document.getElementById('modal-excluir-comentario');
+        const modalOverlayExcluir = document.getElementById('modal-overlay-excluir');
+        const botaoNaoExcluir = document.getElementById('botao-nao-excluir');
+        const botaoSimExcluir = document.getElementById('botao-sim-excluir');
 
+
+        // Event listeners para o modal de login
+        botaoCancelarLogin.addEventListener('click', fecharModalLogin);
+        modalOverlay.addEventListener('click', fecharModalLogin);
+        botaoLogin.addEventListener('click', realizarLogin);
+
+        // Função para exibir o modal de login
         function mostrarModalLogin() {
             modalLogin.style.display = 'block';
             modalOverlay.style.display = 'block';
+            loginEmailInput.value = '';
+            loginSenhaInput.value = '';
         }
 
+        // Função para fechar o modal de login
         function fecharModalLogin() {
             modalLogin.style.display = 'none';
             modalOverlay.style.display = 'none';
-            resetarFormularioLogin();
         }
 
-        function resetarFormularioLogin() {
-            loginEmailInput.value = '';
-            loginSenhaInput.value = '';
-            loginEmailInput.classList.remove('erro-input');
-            loginSenhaInput.classList.remove('erro-input');
-            loginErrorMessage.style.display = 'none';
+        // Função para realizar o login (simulado)
+        function realizarLogin() {
+            const email = loginEmailInput.value;
+            const senha = loginSenhaInput.value;
+
+            // Simulação de login (substitua pela sua lógica de autenticação real)
+            if (email === 'usuario@email.com' && senha === 'senha123') {
+                usuarioAtual = {
+                    userId: 1,
+                    nome: 'Usuário Teste',
+                    email: 'usuario@email.com',
+                    imagemUrl: 'https://via.placeholder.com/40'
+                };
+                fecharModalLogin();
+                renderizarPratos(); // Renderiza os pratos novamente para mostrar as interações do usuário
+            } else {
+                alert('Email ou senha incorretos.');
+            }
         }
 
-        // Mostrar modal ao clicar no botão "Entrar" principal
-        btnEntrarPrincipal.addEventListener('click', mostrarModalLogin);
-        btnCancelarLogin.addEventListener('click', fecharModalLogin);
-        modalOverlay.addEventListener('click', fecharModalLogin); // Fechar ao clicar fora do modal
+        // Função para mostrar a página do usuário logado (adapte conforme necessário)
+        function mostrarPaginaUsuarioLogado(usuario) {
+            console.log('Usuário logado:', usuario);
+            // Atualize a interface para mostrar o usuário logado (ex: foto, nome)
+            document.getElementById('nome-usuario-comentario').textContent = usuario.nome;
+        }
 
-        // Lógica para verificar se o usuário está logado
-        let usuarioLogado = false;
-        let usuarioAtual = null; // Armazenar os dados do usuário logado
+        // Função para renderizar os pratos na página
+        function renderizarPratos() {
+            listaDePratos.innerHTML = ''; // Limpa a lista de pratos
+            pratos.forEach(prato => {
+                // Verifica se o usuário curtiu/descurtiu (simulado)
+                const usuarioCurtiu = usuarioAtual ? prato.likes > 0 : false;
+                const usuarioDescurtiu = usuarioAtual ? prato.dislikes > 0 : false;
 
-        // Função para verificar o login e direcionar o usuário
-        async function realizarLogin(email, senha) {
-            loginErrorMessage.style.display = 'none'; // Esconde a mensagem de erro antes de verificar
+                const pratoCard = document.createElement('div');
+                pratoCard.classList.add('prato-card');
+                pratoCard.dataset.pratoId = prato.idPrato; // Armazena o ID do prato no elemento
 
-            if (!email) {
-                loginEmailInput.classList.add('erro-input');
-                return;
+                pratoCard.innerHTML = `
+                    <img src="${prato.foto}" alt="${prato.nomePrato}" class="prato-imagem">
+                    <div class="info-container">
+                        <h2 class="prato-nome">${prato.nomePrato}</h2>
+                        <p class="prato-local">Local: ${prato.local}, ${prato.cidade}</p>
+                    </div>
+                    <div class="interacoes">
+                        <div class="like-button">
+                            <i class="bi ${usuarioCurtiu ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}"></i> <span>${prato.likes}</span>
+                        </div>
+                        <div class="dislike-button">
+                            <i class="bi ${usuarioDescurtiu ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'}"></i> <span>${prato.dislikes}</span>
+                        </div>
+                        <div class="comment-button">
+                            <i class="bi bi-chat-dots"></i> <span>${prato.comentarios}</span>
+                        </div>
+                    </div>
+                    <div class="comentarios-container" style="display: none;">
+                        <div class="novo-comentario">
+                            <h3>Deixe seu comentário:</h3>
+                            <p><span>${usuarioAtual ? usuarioAtual.nome : 'Faça login para comentar'}</span></p>
+                            <textarea id="texto-comentario-${prato.idPrato}" placeholder="${usuarioAtual ? 'Digite seu comentário' : 'Faça login para comentar'}" ${usuarioAtual ? '' : 'disabled'}></textarea>
+                            <button id="botao-comentar-${prato.idPrato}" class="botao-comentar" disabled style="background-color: #D97014; color: #FFFFFF; float: right;">Comentar</button>
+                        </div>
+                        <div id="lista-de-comentarios-${prato.idPrato}">
+                            </div>
+                    </div>
+                `;
+                listaDePratos.appendChild(pratoCard);
+            });
+            if (usuarioAtual) {
+                mostrarPaginaUsuarioLogado(usuarioAtual);
             }
-            if (!senha) {
-                loginSenhaInput.classList.add('erro-input');
-                return;
+        }
+
+        // Event listener para likes e dislikes (simulado)
+        listaDePratos.addEventListener('click', function(event) {
+            const target = event.target;
+            const pratoCard = target.closest('.prato-card');
+
+            if (pratoCard && usuarioAtual) { // Verifica se o usuário está logado
+                const pratoId = pratoCard.dataset.pratoId;
+
+                if (target.closest('.like-button')) {
+                    // Lógica para dar like (simulado)
+                    console.log(`Usuário ${usuarioAtual.nome} deu like no prato ${pratoId}`);
+                    // Atualize a interface (ex: mude a cor do ícone, incremente o contador)
+                    const likeButton = target.closest('.like-button');
+                    likeButton.querySelector('i').classList.toggle('bi-hand-thumbs-up');
+                    likeButton.querySelector('i').classList.toggle('bi-hand-thumbs-up-fill');
+                    let likesCount = parseInt(likeButton.querySelector('span').textContent);
+                    likesCount++;
+                    likeButton.querySelector('span').textContent = likesCount;
+
+                    // Envie a informação para o backend (simulado)
+                    // fetch(`/api/pratos/${pratoId}/like`, { method: 'POST' });
+
+                } else if (target.closest('.dislike-button')) {
+                    // Lógica para dar dislike (simulado)
+                    console.log(`Usuário ${usuarioAtual.nome} deu dislike no prato ${pratoId}`);
+                    // Atualize a interface
+                    const dislikeButton = target.closest('.dislike-button');
+                    dislikeButton.querySelector('i').classList.toggle('bi-hand-thumbs-down');
+                    dislikeButton.querySelector('i').classList.toggle('bi-hand-thumbs-down-fill');
+                    let dislikesCount = parseInt(dislikeButton.querySelector('span').textContent);
+                    dislikesCount++;
+                    dislikeButton.querySelector('span').textContent = dislikesCount;
+                    // fetch(`/api/pratos/${pratoId}/dislike`, { method: 'POST' });
+                }
+            } else if (target.closest('.like-button') || target.closest('.dislike-button')) {
+                mostrarModalLogin(); // Mostra o modal de login se o usuário não estiver logado
             }
+        });
 
-            const loginData = { email: email, senha: senha };
+        // Event listener para abrir comentários
+        listaDePratos.addEventListener('click', function(event) {
+            const target = event.target;
+            const pratoCard = target.closest('.prato-card');
+            const comentariosContainer = pratoCard?.querySelector('.comentarios-container');
+            const commentButton = target.closest('.comment-button');
+            const pratoImage = target.closest('.prato-imagem');
 
-            try {
-                const response = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(loginData),
-                });
-
-                if (response.ok) {
-                    const userData = await response.json();
-                    console.log('Login bem-sucedido:', userData);
-                    usuarioLogado = true;
-                    usuarioAtual = userData; // Armazena os dados do usuário
-                    armazenarUsuarioLogado(userData); // Persiste o login
-                    fecharModalLogin();
-                    mostrarPaginaUsuarioLogado(userData); // Exibe a página de usuário logado
-                } else {
-                    const error = await response.json();
-                    console.error('Erro no login:', error);
-                    loginErrorMessage.textContent = error.message || 'Usuário ou senha incorreto';
-                    loginErrorMessage.style.display = 'block';
-                    if (error.field === 'email') {
-                        loginEmailInput.classList.add('erro-input');
-                    } else if (error.field === 'senha') {
-                        loginSenhaInput.classList.add('erro-input');
+            if (pratoCard && usuarioAtual) {
+                if (commentButton || pratoImage) {
+                    const pratoId = pratoCard.dataset.pratoId;
+                    if (comentariosContainer.style.display === 'none') {
+                        comentariosContainer.style.display = 'block';
+                        carregarComentarios(pratoId); // Função para buscar e exibir comentários
+                    } else {
+                        comentariosContainer.style.display = 'none';
                     }
                 }
-            } catch (error) {
-                console.error('Erro na comunicação com o servidor:', error);
-                loginErrorMessage.textContent = 'Erro ao tentar logar.';
-                loginErrorMessage.style.display = 'block';
-            }
-        }
-
-        function mostrarPaginaUsuarioLogado(usuario) {
-            // Esconde elementos não necessários
-            document.querySelector('.login').style.display = 'none';
-            document.querySelector('.main').style.display = 'none';
-            btnEntrarPrincipal.style.display = 'none';
-
-            // Exibe a página de usuário logado
-            usuarioLogadoDiv.style.display = 'block';
-            nomeUsuarioLogadoSpan.textContent = usuario.nome;
-            emailUsuarioLogadoSpan.textContent = usuario.email; // Certifique-se de que seu backend retorna o email
-
-            //Atualiza a interface
-            buscarPratos();
-        }
-
-        function armazenarUsuarioLogado(usuario) {
-            localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-        }
-
-        function obterUsuarioLogado() {
-            const usuarioLogadoStr = localStorage.getItem('usuarioLogado');
-            if (usuarioLogadoStr) {
-                return JSON.parse(usuarioLogadoStr);
-            }
-            return null;
-        }
-
-        function removerUsuarioLogado() {
-            localStorage.removeItem('usuarioLogado');
-            usuarioLogado = false;
-            usuarioAtual = null;
-            //Esconde a página de usuário logado e mostra o resto da página
-            usuarioLogadoDiv.style.display = 'none';
-            document.querySelector('.login').style.display = 'block';
-            document.querySelector('.main').style.display = 'block';
-            btnEntrarPrincipal.style.display = 'block';
-
-            resetarFormularioLogin();
-        }
-
-        // Verifica se o usuário já está logado ao carregar a página
-        const usuarioLogadoNaPagina = obterUsuarioLogado();
-        if (usuarioLogadoNaPagina) {
-            usuarioLogado = true;
-            usuarioAtual = usuarioLogadoNaPagina;
-            mostrarPaginaUsuarioLogado(usuarioLogadoNaPagina);
-        }
-
-
-        // Adiciona event listeners aos ícones de interação para verificar o login
-        document.getElementById('lista-de-pratos').addEventListener('click', function(event) {
-            const target = event.target;
-            if ((target.alt === 'Like' || target.alt === 'Dislike' || target.alt === 'Comentários') && !usuarioLogado) {
+            } else if ((commentButton || pratoImage) && !usuarioAtual) {
                 mostrarModalLogin();
             }
         });
 
-        // Evento de clique do botão Entrar no modal
-        btnEntrarLogin.addEventListener('click', function() {
-            const email = loginEmailInput.value;
-            const senha = loginSenhaInput.value;
-            realizarLogin(email, senha);
-        });
-
-        //Evento de clique do botão Logout
-        logoutButton.addEventListener('click', function(){
-            removerUsuarioLogado();
-        })
-
-        function atualizarTotais(pratos) {
-            let totalLikes = 0;
-            let totalDislikes = 0;
-            pratos.forEach(prato => {
-                totalLikes += prato.likes;
-                totalDislikes += prato.dislikes;
-            });
-            document.getElementById('total-likes').textContent = totalLikes;
-            document.getElementById('total-dislikes').textContent = totalDislikes;
-        }
-
-    async function buscarPratos() {
-        try {
-            const response = await fetch('/api/pratos');
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status}`);
+        // Event listener para habilitar/desabilitar botão Comentar
+        listaDePratos.addEventListener('input', function(event) {
+            const target = event.target;
+            if (target.tagName === 'TEXTAREA' && target.id.startsWith('texto-comentario-')) {
+                const pratoId = target.id.split('-')[2];
+                const botaoComentar = document.getElementById(`botao-comentar-${pratoId}`);
+                botaoComentar.disabled = !target.value.trim();
             }
-            const pratos = await response.json();
-            exibirPratos(pratos);
-            atualizarTotais(pratos);
-        } catch (error) {
-            console.error("Erro ao buscar os pratos:", error);
-            //document.getElementById('lista-de-pratos').innerHTML = '<p>Erro ao carregar os pratos.</p>'; // Remova ou comente esta linha
+        });
+
+        // Event listener para enviar comentário
+        listaDePratos.addEventListener('click', async function(event) {
+            const target = event.target;
+            if (target.classList.contains('botao-comentar') && !target.disabled) {
+                const pratoCard = target.closest('.prato-card');
+                const pratoId = pratoCard.dataset.pratoId;
+                const textoComentario = document.getElementById(`texto-comentario-${pratoId}`).value.trim();
+
+                if (pratoId && textoComentario && usuarioAtual) {
+                    const novoComentario = {
+                        pratoId: pratoId,
+                        usuarioId: usuarioAtual.userId,
+                        texto: textoComentario
+                    };
+
+                    const response = await fetch('/api/comentarios', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(novoComentario)
+                    });
+
+                    if (response.ok) {
+                        document.getElementById(`texto-comentario-${pratoId}`).value = '';
+                        target.disabled = true;
+                        carregarComentarios(pratoId); // Recarregar os comentários após enviar
+                        atualizarContadorComentarios(pratoId); // Atualizar o contador na interface
+                    } else {
+                        console.error('Erro ao enviar comentário:', await response.json());
+                        alert('Erro ao enviar comentário. Tente novamente.');
+                    }
+                }
+            }
+        });
+
+        // Função para atualizar o contador de comentários na interface
+        async function atualizarContadorComentarios(pratoId) {
+            const pratoCard = document.querySelector(`.prato-card[data-prato-id="${pratoId}"]`);
+            const comentarioCountSpan = pratoCard?.querySelector('.comment-button span');
+            if (comentarioCountSpan) {
+                const response = await fetch(`/api/pratos/${pratoId}/comentarios/count`);
+                if (response.ok) {
+                    const { count } = await response.json();
+                    comentarioCountSpan.textContent = count;
+                } else {
+                    console.error('Erro ao atualizar contador de comentários:', await response.json());
+                }
+            }
         }
-    }
 
-    function exibirPratos(pratos) {
-        const listaDePratosDiv = document.getElementById('lista-de-pratos');
-        listaDePratosDiv.innerHTML = ''; // Limpa qualquer conteúdo anterior
+        // Função para carregar os comentários de um prato
+        async function carregarComentarios(pratoId) {
+            const listaDeComentariosDiv = document.getElementById(`lista-de-comentarios-${pratoId}`);
+            listaDeComentariosDiv.innerHTML = 'Carregando comentários...';
 
-        pratos.forEach(prato => {
-            const pratoCard = document.createElement('div');
-            pratoCard.classList.add('prato-card');
+            const response = await fetch(`/api/comentarios/${pratoId}`);
+            if (response.ok) {
+                const comentarios = await response.json();
+                listaDeComentariosDiv.innerHTML = '';
+                comentarios.forEach(comentario => {
+                    const comentarioDiv = criarElementoComentario(comentario, pratoId); // Passa pratoId
+                    listaDeComentariosDiv.appendChild(comentarioDiv);
+                });
+            } else {
+                listaDeComentariosDiv.innerHTML = 'Erro ao carregar os comentários.';
+                console.error('Erro ao carregar comentários:', await response.json());
+            }
+        }
 
-            pratoCard.innerHTML = `
-                <img src="${prato.foto}" alt="${prato.nomePrato}" class="prato-imagem">
-                <div class="info-container">
-                    <h2 class="prato-nome">${prato.nomePrato}</h2>
-                    <p class="prato-local">Local: ${prato.local}, ${prato.cidade}</p>
+        // Função para criar um elemento de comentário
+        function criarElementoComentario(comentario, pratoId) {
+            const comentarioDiv = document.createElement('div');
+            comentarioDiv.classList.add('comentario');
+            comentarioDiv.dataset.comentarioId = comentario.idComentario;
+            comentarioDiv.dataset.pratoId = pratoId; // Armazena o pratoId
+            comentarioDiv.innerHTML = `
+                <div class="comentario-header">
+                    <span>${comentario.nomeUsuario}</span>
+                    ${usuarioAtual?.userId === comentario.usuarioId ? `
+                        <div class="comentario-acoes">
+                            <img src="lapis_editar.svg" alt="Editar" class="editar-comentario" data-comentario-id="${comentario.idComentario}" style="color: #FFFFFF;">
+                            <img src="lixeira_deletar.svg" alt="Deletar" class="deletar-comentario" data-comentario-id="${comentario.idComentario}" style="color: #FF0000;">
+                        </div>
+                    ` : ''}
                 </div>
-                <div class="interacoes">
-                    <img src="flecha_cima_vazia.svg" alt="Like"> <span>${prato.likes}</span>
-                    <img src="flecha_baixo_vazia.svg" alt="Dislike"> <span>${prato.dislikes}</span>
-                    <img src="chat.svg" alt="Comentários"> <span>${prato.comentarios}</span>
-                </div>
+                <p class="texto-comentario">${comentario.texto}</p>
+                ${usuarioAtual?.userId === comentario.usuarioId ? `
+                    <textarea class="editar-texto-comentario" style="display: none;">${comentario.texto}</textarea>
+                    <button class="botao-atualizar-comentario" data-comentario-id="${comentario.idComentario}" data-prato-id="${pratoId}" style="display: none; background-color: #D97014; color: #FFFFFF; float: right;">Atualizar</button>
+                ` : ''}
             `;
+            return comentarioDiv;
+        }
 
-            listaDePratosDiv.appendChild(pratoCard);
+        // Event listener para editar comentário
+        listaDePratos.addEventListener('click', function(event) {
+            const editarIcon = event.target.closest('.editar-comentario');
+            if (editarIcon) {
+                const comentarioDiv = editarIcon.closest('.comentario');
+                const textoComentarioParagrafo = comentarioDiv.querySelector('.texto-comentario');
+                const editarTextoarea = comentarioDiv.querySelector('.editar-texto-comentario');
+                const botaoAtualizar = comentarioDiv.querySelector('.botao-atualizar-comentario');
+
+                textoComentarioParagrafo.style.display = 'none';
+                editarTextoarea.style.display = 'block';
+                botaoAtualizar.style.display = 'block';
+            }
         });
-    }
 
-    function atualizarTotais(pratos) {
-        let totalLikes = 0;
-        let totalDislikes = 0;
-        pratos.forEach(prato => {
-            totalLikes += prato.likes;
-            totalDislikes += prato.dislikes;
+        // Event listener para atualizar comentário
+        listaDePratos.addEventListener('click', async function(event) {
+            const atualizarBotao = event.target.closest('.botao-atualizar-comentario');
+            if (atualizarBotao) {
+                const comentarioDiv = atualizarBotao.closest('.comentario');
+                const comentarioId = atualizarBotao.dataset.comentarioId;
+                const textoAtualizado = comentarioDiv.querySelector('.editar-texto-comentario').value.trim();
+                const pratoId = atualizarBotao.dataset.pratoId; // Obtém o pratoId do botão
+
+                if (comentarioId && textoAtualizado && usuarioAtual) {
+                    const response = await fetch(`/api/comentarios/${comentarioId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ texto: textoAtualizado })
+                    });
+
+                    if (response.ok) {
+                        const textoComentarioParagrafo = comentarioDiv.querySelector('.texto-comentario');
+                        const editarTextoarea = comentarioDiv.querySelector('.editar-texto-comentario');
+                        const botaoAtualizar = comentarioDiv.querySelector('.botao-atualizar-comentario');
+
+                        textoComentarioParagrafo.textContent = textoAtualizado;
+                        textoComentarioParagrafo.style.display = 'block';
+                        editarTextoarea.style.display = 'none';
+                        botaoAtualizar.style.display = 'none';
+                        carregarComentarios(pratoId);
+                    } else {
+                        console.error('Erro ao atualizar comentário:', await response.json());
+                        alert('Erro ao atualizar comentário. Tente novamente.');
+                    }
+                }
+            }
         });
-        document.getElementById('total-likes').textContent = totalLikes;
-        document.getElementById('total-dislikes').textContent = totalDislikes;
-    }
 
-    // Chama a função para buscar os pratos quando a página carregar
-    window.onload = buscarPratos;
-</script>
+        // Event listener para deletar comentário (exibir modal)
+        listaDePratos.addEventListener('click', function(event) {
+            const deletarIcon = event.target.closest('.deletar-comentario');
+            if (deletarIcon) {
+                comentarioIdParaExcluir = deletarIcon.dataset.comentarioId;
+                modalExcluirComentario.style.display = 'block';
+                modalOverlayExcluir.style.display = 'block';
+            }
+        });
 
+        // Event listeners para o modal de exclusão de comentário
+        botaoNaoExcluir.addEventListener('click', function() {
+            modalExcluirComentario.style.display = 'none';
+            modalOverlayExcluir.style.display = 'none';
+            comentarioIdParaExcluir = null;
+        });
+
+        botaoSimExcluir.addEventListener('click', async function(event) {
+            if (comentarioIdParaExcluir && usuarioAtual) {
+                const comentarioDiv = document.querySelector(`.comentario[data-comentario-id="${comentarioIdParaExcluir}"]`);
+                const pratoId = comentarioDiv?.dataset.pratoId;
+
+                const response = await fetch(`/api/comentarios/${comentarioIdParaExcluir}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    if (pratoId) {
+                        carregarComentarios(pratoId); // Recarrega os comentários após a exclusão
+                        atualizarContadorComentarios(pratoId);
+                    }
+                    modalExcluirComentario.style.display = 'none';
+                    modalOverlayExcluir.style.display = 'none';
+                    comentarioIdParaExcluir = null;
+                } else {
+                    console.error('Erro ao excluir comentário:', await response.json());
+                    alert('Erro ao excluir comentário. Tente novamente.');
+                }
+            }
+        });
+
+        modalOverlayExcluir.addEventListener('click', function() {
+            modalExcluirComentario.style.display = 'none';
+            modalOverlayExcluir.style.display = 'none';
+            comentarioIdParaExcluir = null;
+        });
+
+        // Inicialização: renderiza os pratos na página
+        renderizarPratos();
+    </script>
 </body>
-<!--SCRIPT BOOTSTRAP-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>    
 </html>

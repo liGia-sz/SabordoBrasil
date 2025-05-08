@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cryptography.Password;
+using System.Threading.Tasks;
 
 // Modelo para a requisição de login
 public class LoginRequest
@@ -17,23 +16,25 @@ public class LoginErrorResponse
     public string Field { get; set; } // Opcional: para indicar qual campo tem o erro
 }
 
-// Modelo para a resposta de sucesso do login (você pode incluir informações do usuário)
+// Modelo para a resposta de sucesso do login
 public class LoginSuccessResponse
 {
     public int UserId { get; set; }
     public string Nome { get; set; }
-    // Outras informações do usuário que você queira retornar
+    public string Email { get; set; }
+    public string ImagemUrl { get; set; } // Adicione a propriedade para a URL da imagem do usuário
+    public int TotalLikes { get; set; }
+    public int TotalDislikes { get; set; }
 }
 
 [ApiController]
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly IPasswordHasher<UsuarioDto> _passwordHasher;
-    // Supondo que você tenha um serviço ou repositório para acessar os usuários no banco
-    private readonly IUsuarioService _usuarioService; // Crie esta interface e implementação
+    private readonly IPasswordHasher<Usuario> _passwordHasher; // Use seu modelo de Usuário
+    private readonly IUsuarioService _usuarioService; // Sua interface de serviço para usuários
 
-    public AuthController(IPasswordHasher<UsuarioDto> passwordHasher, IUsuarioService usuarioService)
+    public AuthController(IPasswordHasher<Usuario> passwordHasher, IUsuarioService usuarioService)
     {
         _passwordHasher = passwordHasher;
         _usuarioService = usuarioService;
@@ -58,17 +59,25 @@ public class AuthController : ControllerBase
             return Unauthorized(new LoginErrorResponse { Message = "Usuário ou senha incorreto." });
         }
 
-        // Verificar a senha usando o PasswordHasher
         var result = _passwordHasher.VerifyHashedPassword(usuario, usuario.Senha, model.Senha);
 
         if (result == PasswordVerificationResult.Success)
         {
-            // Login bem-sucedido
-            return Ok(new LoginSuccessResponse { UserId = usuario.idUsuarios, Nome = usuario.Nome });
+            // Lógica para buscar o total de likes e dislikes do usuário
+            var totais = await _usuarioService.ObterTotalLikesDislikes(usuario.IdUsuarios);
+
+            return Ok(new LoginSuccessResponse
+            {
+                UserId = usuario.IdUsuarios,
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+                ImagemUrl = usuario.ImagemUrl, // Supondo que seu modelo de Usuário tenha essa propriedade
+                TotalLikes = totais.TotalLikes,
+                TotalDislikes = totais.TotalDislikes
+            });
         }
         else
         {
-            // Senha incorreta
             return Unauthorized(new LoginErrorResponse { Message = "Usuário ou senha incorreto." });
         }
     }

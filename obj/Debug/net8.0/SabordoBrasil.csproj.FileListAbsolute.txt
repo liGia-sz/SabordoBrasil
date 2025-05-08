@@ -24,3 +24,12 @@ C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\obj\Debug\net8.0\refint\
 C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.pdb
 C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.genruntimeconfig.cache
 C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\obj\Debug\net8.0\ref\SabordoBrasil.dll
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.AssemblyInfoInputs.cache
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.AssemblyInfo.cs
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.csproj.CoreCompileInputs.cache
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.sourcelink.json
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.dll
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\refint\SabordoBrasil.dll
+C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.pdb
