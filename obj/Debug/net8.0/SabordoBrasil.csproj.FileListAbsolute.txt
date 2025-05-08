@@ -33,3 +33,4 @@ C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasi
 C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.dll
 C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\refint\SabordoBrasil.dll
 C:\Users\PC\Documents\LÍGIA-GITBASH\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.pdb
+C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.csproj.AssemblyReference.cache

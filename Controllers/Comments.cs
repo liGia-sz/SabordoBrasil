@@ -1,64 +1,73 @@
-public class Comentario
-{
-    public int IdComentario { get; set; }
-    public int PratoId { get; set; }
-    public int UsuarioId { get; set; }
-    public string NomeUsuario { get; set; }
-    public string Texto { get; set; }
-    public DateTime DataCriacao { get; set; }
-    // Outras propriedades, se necessário
-}
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
-[ApiController]
-[Route("api/comentarios")]
-public class ComentariosController : ControllerBase
+namespace SabordoBrasil.Controllers
 {
-    private readonly IComentarioService _comentarioService;
-    private readonly IUsuarioService _usuarioService; // Para obter o nome do usuário
-
-    public ComentariosController(IComentarioService comentarioService, IUsuarioService usuarioService)
+    [ApiController]
+    [Route("api/comentarios")]
+    public class CommentsController : ControllerBase
     {
-        _comentarioService = comentarioService;
-        _usuarioService = usuarioService;
-    }
+        private readonly IComentarioService _comentarioService;
+        private readonly SeuDbContext _context;
 
-    [HttpGet("{pratoId}")]
-    public async Task<ActionResult<IEnumerable<Comentario>>> GetComentarios(int pratoId)
-    {
-        var comentarios = await _comentarioService.ListarComentariosPorPrato(pratoId);
-        return Ok(comentarios);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> PostComentario([FromBody] NovoComentarioRequest request)
-    {
-        var usuario = await _usuarioService.BuscarPorId(request.UsuarioId);
-        if (usuario == null)
+        public CommentsController(IComentarioService comentarioService, SeuDbContext context)
         {
-            return BadRequest("Usuário não encontrado.");
+            _comentarioService = comentarioService;
+            _context = context;
         }
 
-        var comentario = new Comentario
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AdicionarComentario([FromBody] ComentarioDTO comentarioDTO)
         {
-            PratoId = request.PratoId,
-            UsuarioId = request.UsuarioId,
-            NomeUsuario = usuario.Nome,
-            Texto = request.Texto,
-            DataCriacao = DateTime.UtcNow
-        };
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        var sucesso = await _comentarioService.AdicionarComentario(comentario);
-        if (sucesso)
-        {
-            return Ok();
+            var usuarioId = ObterUsuarioIdLogado();
+            var pratoExiste = await _context.Pratos.AnyAsync(p => p.IdPrato == comentarioDTO.PratoId);
+
+            if (!pratoExiste)
+            {
+                return NotFound("Prato não encontrado.");
+            }
+
+            var novoComentario = new Comentario
+            {
+                PratoId = comentarioDTO.PratoId,
+                UsuarioId = usuarioId,
+                Texto = comentarioDTO.Texto,
+                DataCriacao = DateTime.UtcNow,
+                NomeUsuario = User.FindFirstValue(ClaimTypes.Name)
+            };
+
+            await _comentarioService.AdicionarComentario(novoComentario);
+            return CreatedAtAction("GetComentario", new { id = novoComentario.IdComentario }, novoComentario);
         }
-        return BadRequest("Erro ao adicionar comentário.");
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Comentario>> GetComentario(int id)
+        {
+            var comentario = await _comentarioService.ObterComentarioPorId(id);
+            if (comentario == null)
+            {
+                return NotFound();
+            }
+            return Ok(comentario);
+        }
+
+        private int ObterUsuarioIdLogado()
+        {
+            return int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutComentario(int id, [FromBody] AtualizarComentarioRequest request)
+    public class ComentarioDTO
     {
-        var sucesso = await _comentarioService}
+        public int PratoId { get; set; }
+        public string ?Texto { get; set; }
+    }
+}

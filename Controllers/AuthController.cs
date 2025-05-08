@@ -1,84 +1,88 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Cryptography.Password;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
-// Modelo para a requisição de login
-public class LoginRequest
+namespace SabordoBrasil.Controllers
 {
-    public string Email { get; set; }
-    public string Senha { get; set; }
-}
-
-// Modelo para a resposta de erro de login
-public class LoginErrorResponse
-{
-    public string Message { get; set; }
-    public string Field { get; set; } // Opcional: para indicar qual campo tem o erro
-}
-
-// Modelo para a resposta de sucesso do login
-public class LoginSuccessResponse
-{
-    public int UserId { get; set; }
-    public string Nome { get; set; }
-    public string Email { get; set; }
-    public string ImagemUrl { get; set; } // Adicione a propriedade para a URL da imagem do usuário
-    public int TotalLikes { get; set; }
-    public int TotalDislikes { get; set; }
-}
-
-[ApiController]
-[Route("api/auth")]
-public class AuthController : ControllerBase
-{
-    private readonly IPasswordHasher<Usuario> _passwordHasher; // Use seu modelo de Usuário
-    private readonly IUsuarioService _usuarioService; // Sua interface de serviço para usuários
-
-    public AuthController(IPasswordHasher<Usuario> passwordHasher, IUsuarioService usuarioService)
+    [ApiController]
+    [Route("api/auth")]
+    public class AuthController : ControllerBase
     {
-        _passwordHasher = passwordHasher;
-        _usuarioService = usuarioService;
+        private readonly IPasswordHasher<UsuarioDTO> _passwordHasher;
+
+        public SeuDbContext Context { get; }
+
+        public AuthController(SeuDbContext context, IPasswordHasher<UsuarioDTO> passwordHasher)
+        {
+            Context = context;
+            _passwordHasher = passwordHasher;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UsuarioDTO usuarioDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Verifique se o email já existe
+            if (await Context.Usuarios.AnyAsync(u => u.Email == usuarioDTO.Email))
+            {
+                return Conflict("Email já está em uso.");
+            }
+
+            var novoUsuario = new Usuario
+            {
+                Nome = usuarioDTO.Nome,
+                Email = usuarioDTO.Email,
+                ImagemUrl = usuarioDTO.ImagemUrl
+            };
+
+            novoUsuario.Senha = _passwordHasher.HashPassword(novoUsuario, usuarioDTO.Senha);
+
+            Context.Usuarios.Add(novoUsuario);
+            await Context.SaveChangesAsync();
+
+            return Ok(new { Message = "Usuário registrado com sucesso!" });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var usuario = await Context.Usuarios.FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
+            if (usuario == null)
+            {
+                return Unauthorized("Email ou senha inválidos.");
+            }
+
+            var resultadoVerificacao = _passwordHasher.VerifyHashedPassword(usuario, usuario.Senha, loginDTO.Senha);
+
+            if (resultadoVerificacao == PasswordVerificationResult.Failed)
+            {
+                return Unauthorized("Email ou senha inválidos.");
+            }
+
+            return Ok(new { Message = "Login realizado com sucesso!" });
+        }
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest model)
+    public class UsuarioDTO
     {
-        if (string.IsNullOrEmpty(model.Email))
-        {
-            return BadRequest(new LoginErrorResponse { Message = "O email é obrigatório.", Field = "email" });
-        }
-        if (string.IsNullOrEmpty(model.Senha))
-        {
-            return BadRequest(new LoginErrorResponse { Message = "A senha é obrigatória.", Field = "senha" });
-        }
+        public string? Nome { get; set; }
+        public string? Email { get; set; }
+        public string? Senha { get; set; }
+        public string? ImagemUrl { get; set; }
+    }
 
-        var usuario = await _usuarioService.BuscarPorEmail(model.Email);
-
-        if (usuario == null)
-        {
-            return Unauthorized(new LoginErrorResponse { Message = "Usuário ou senha incorreto." });
-        }
-
-        var result = _passwordHasher.VerifyHashedPassword(usuario, usuario.Senha, model.Senha);
-
-        if (result == PasswordVerificationResult.Success)
-        {
-            // Lógica para buscar o total de likes e dislikes do usuário
-            var totais = await _usuarioService.ObterTotalLikesDislikes(usuario.IdUsuarios);
-
-            return Ok(new LoginSuccessResponse
-            {
-                UserId = usuario.IdUsuarios,
-                Nome = usuario.Nome,
-                Email = usuario.Email,
-                ImagemUrl = usuario.ImagemUrl, // Supondo que seu modelo de Usuário tenha essa propriedade
-                TotalLikes = totais.TotalLikes,
-                TotalDislikes = totais.TotalDislikes
-            });
-        }
-        else
-        {
-            return Unauthorized(new LoginErrorResponse { Message = "Usuário ou senha incorreto." });
-        }
+    public class LoginDTO
+    {
+        public string? Email { get; set; }
+        public string? Senha { get; set; }
     }
 }
