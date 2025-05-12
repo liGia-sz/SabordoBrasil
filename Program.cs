@@ -12,6 +12,7 @@ var app = builder.Build();
 // Configura o pipeline de middleware
 app.UseDefaultFiles(); // Serve index.html por padrão
 app.UseStaticFiles(); // Permite servir arquivos da pasta wwwroot
+app.UseStaticFiles(); // Adiciona novamente o middleware para servir arquivos estáticos
 app.UseRouting(); // Configura o roteamento
 
 // Mapeia os controladores

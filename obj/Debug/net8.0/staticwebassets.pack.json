@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\Logo S. do Brasil.png",
+      "PackagePath": "staticwebassets\\img\\Logo S. do Brasil.png"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\batidasTropicais.png",
+      "PackagePath": "staticwebassets\\img\\batidasTropicais.png"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\moquecaCapixaba.png",
+      "PackagePath": "staticwebassets\\img\\moquecaCapixaba.png"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\panquecaAoXarope.png",
+      "PackagePath": "staticwebassets\\img\\panquecaAoXarope.png"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\userLogado.html",
+      "PackagePath": "staticwebassets\\userLogado.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SabordoBrasil.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.SabordoBrasil.props",
+      "PackagePath": "build\\SabordoBrasil.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.SabordoBrasil.props",
+      "PackagePath": "buildMultiTargeting\\SabordoBrasil.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.SabordoBrasil.props",
+      "PackagePath": "buildTransitive\\SabordoBrasil.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
