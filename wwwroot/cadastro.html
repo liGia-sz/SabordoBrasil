@@ -124,14 +124,29 @@
                 return;
             }
 
-            mensagem.style.color = "green";
-            mensagem.textContent = "Cadastro realizado com sucesso!";
-            mensagem.style.display = "block";
+            fetch('api/usuario/cadastrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, email, senha })
+            })
+            .then(response => response.json())
+            .then(data => {
+                mensagem.style.color = data.mensagem.includes("sucesso") ? "green" : "red";
+                mensagem.textContent = data.mensagem;
+                mensagem.style.display = "block";
 
-            // Redireciona para a página do usuário logado após 2 segundos
-            setTimeout(() => {
-                window.location.href = 'userLogado.html'; // Substitua pelo caminho correto da página
-            }, 2000);
+                if (data.mensagem.includes("sucesso")) {
+                    setTimeout(() => {
+                        window.location.href = 'userLogado.html';
+                    }, 2000);
+                }
+            })
+            .catch(error => {
+                mensagem.style.color = "red";
+                mensagem.textContent = "Erro ao cadastrar. Tente novamente.";
+                mensagem.style.display = "block";
+                console.error(error);
+            });
         }
 
         // Função para voltar à página inicial

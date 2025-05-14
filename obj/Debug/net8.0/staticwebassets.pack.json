@@ -21,6 +21,18 @@
       "PackagePath": "staticwebassets\\img\\panquecaAoXarope.png"
     },
     {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\usuario_01.jpg",
+      "PackagePath": "staticwebassets\\img\\usuario_01.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\usuario_02.jpg",
+      "PackagePath": "staticwebassets\\img\\usuario_02.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\usuario_03.jpg",
+      "PackagePath": "staticwebassets\\img\\usuario_03.jpg"
+    },
+    {
       "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },

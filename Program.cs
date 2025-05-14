@@ -1,11 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using SeuProjeto.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Adiciona os serviços necessários
 builder.Services.AddControllers();
+
+// Configurar o Entity Framework Core
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
