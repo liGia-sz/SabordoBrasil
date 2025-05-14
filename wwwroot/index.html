@@ -267,42 +267,53 @@
         </div>
     </div>
 
-    <!-- Modal de Login -->
     <div id="modal-login" class="modal">
-        <div class="modal-content">
-            <h2>Login</h2>
-            <input type="email" id="email" placeholder="E-mail">
-            <input type="password" id="senha" placeholder="Senha">
-            <button class="btn-login" onclick="fazerLogin()">Login</button>
-            <button class="btn-cadastro" onclick="irParaCadastro()">Cadastro</button>
-            <button class="btn-close" onclick="fecharLogin()">Fechar</button>
-        </div>
+    <div class="modal-content">
+        <h2>Login</h2>
+        <div id="mensagem-login" style="color: red; margin-bottom: 10px; display: none;"></div> <!-- Mensagem de erro -->
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="password" id="senha" placeholder="Senha">
+        <button class="btn-login" onclick="fazerLogin()">Login</button>
+        <button class="btn-cadastro" onclick="irParaCadastro()">Cadastro</button>
+        <button class="btn-close" onclick="fecharLogin()">Fechar</button>
     </div>
+</div>
 
-    <script>
-        // Função para abrir o modal de login
-        function abrirLogin() {
-            const modal = document.getElementById('modal-login');
-            modal.style.display = 'flex';
-        }
+<script>
+    // Função para abrir o modal de login
+    function abrirLogin() {
+        const modal = document.getElementById('modal-login');
+        modal.style.display = 'flex'; // Exibe o modal
+    }
 
-        // Função para fechar o modal de login
-        function fecharLogin() {
-            const modal = document.getElementById('modal-login');
-            modal.style.display = 'none';
-        }
+    // Função para fechar o modal de login
+    function fecharLogin() {
+        const modal = document.getElementById('modal-login');
+        modal.style.display = 'none'; // Oculta o modal
+    }
 
-        // Função para redirecionar para a página de cadastro
-        function irParaCadastro() {
-            window.location.href = 'cadastro.html'; // Substitua pelo caminho correto da página de cadastro
-        }
+    // Função de exemplo para login
+    function fazerLogin() {
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+        const mensagem = document.getElementById('mensagem-login');
 
-        // Função de exemplo para login
-        function fazerLogin() {
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-            alert(`E-mail: ${email}\nSenha: ${senha}`);
+        // Simulação de validação
+        if (email === "teste@exemplo.com" && senha === "123456") {
+            mensagem.style.color = "green";
+            mensagem.textContent = "Login realizado com sucesso!";
+            mensagem.style.display = "block";
+        } else {
+            mensagem.style.color = "red";
+            mensagem.textContent = "E-mail ou senha inválidos.";
+            mensagem.style.display = "block";
         }
-    </script>
+    }
+
+    // Função para redirecionar para a página de cadastro
+    function irParaCadastro() {
+        window.location.href = 'cadastro.html'; // Substitua pelo caminho correto da página de cadastro
+    }
+</script>
 </body>
 </html>

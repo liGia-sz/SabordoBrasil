@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8NMN3VTQcPzYxixKFAVHI3alGKaIxaZVLgWHSdDO++M=",
+  "Hash": "gD4nZiqXn1mGvmTYQDxgEhnhB7axobYxsUQJL80XR+Y=",
   "Source": "SabordoBrasil",
   "BasePath": "_content/SabordoBrasil",
   "Mode": "Default",
@@ -16,6 +16,25 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\cadastro.html",
+      "SourceId": "SabordoBrasil",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
+      "BasePath": "_content/SabordoBrasil",
+      "RelativePath": "cadastro.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\cadastro.html"
+    },
     {
       "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\batidasTropicais.png",
       "SourceId": "SabordoBrasil",
@@ -110,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\style.css",
+      "SourceId": "SabordoBrasil",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
+      "BasePath": "_content/SabordoBrasil",
+      "RelativePath": "style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\style.css"
     },
     {
       "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\userLogado.html",

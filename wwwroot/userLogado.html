@@ -7,31 +7,79 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Viga", sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-color: #fcf8f4;
         }
-        #lista-de-pratos {
-            max-width: 800px;
-            margin: 20px auto;
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 2400px;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .prato-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
+        .coluna-perfil, .coluna-sair {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .coluna-perfil img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .coluna-perfil h2 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+        .linha-laranja {
+            width: 100%;
+            height: 5px;
+            background-color: #D97014;
+            margin: 20px 0;
+        }
+        .likes-dislikes, .comentarios {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .likes-dislikes i, .comentarios i {
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #555;
+        }
+        .comentarios span {
+            font-size: 1.2em;
+        }
+        .coluna-cards {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .prato-card {
+            width: 90%;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .prato-imagem {
             width: 100%;
-            max-height: 200px;
+            height: 500px;
             object-fit: cover;
             border-radius: 8px;
         }
@@ -48,121 +96,186 @@
         }
         .interacoes {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
             margin-top: 10px;
         }
-        .like-button, .dislike-button, .comment-button {
-            cursor: pointer;
+        .comentarios {
             display: flex;
             align-items: center;
             gap: 5px;
         }
-        .comentarios-container {
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-        }
-        .novo-comentario {
-            margin-bottom: 10px;
-        }
-        #texto-comentario {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            resize: none;
-        }
-        #botao-comentar {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-            background-color: #D97014;
-            color: #fff;
-        }
-        .comentario {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 10px;
-            position: relative;
-        }
-        .comentario-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 5px;
-        }
-        .comentario-acoes {
-            display: flex;
+        .comentario-container {
+            margin-top: 10px;
+            display: none;
+            flex-direction: column;
             gap: 10px;
         }
-        .editar-comentario, .deletar-comentario {
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
+        .comentario-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
         }
-        .editar-comentario {
-            color: #FFFFFF;
-        }
-        .deletar-comentario {
-            color: #FF0000;
-        }
-        .botao-atualizar-comentario {
-            padding: 5px 10px;
+        .comentario-container button {
+            padding: 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            float: right;
-            margin-top: 5px;
-            background-color: #D97014;
+            font-size: 1em;
+        }
+        .btn-salvar {
+            background-color: #28a745;
             color: #fff;
+        }
+        .btn-salvar:hover {
+            background-color: #218838;
+        }
+        .btn-excluir {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .btn-excluir:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
 <body>
-    <div id="lista-de-pratos">
-        <!-- Exemplo de card de prato -->
-        <div class="prato-card">
-            <img src="https://via.placeholder.com/150" alt="Prato 1" class="prato-imagem">
-            <div class="info-container">
-                <h2 class="prato-nome">Prato 1</h2>
-                <p class="prato-local">Local: Local 1, Cidade 1</p>
-            </div>
-            <div class="interacoes">
-                <div class="like-button">
-                    <i class="bi bi-hand-thumbs-up"></i> <span>10</span>
+    <div class="container">
+        <!-- Coluna do perfil do usuário -->
+        <div class="coluna-perfil">
+            <img src="img/usuario_01.jpg" alt="Foto do Usuário">
+            <h2>Nome do Usuário</h2>
+            <div class="linha-laranja"></div>
+            <div class="likes-dislikes">
+                <div>
+                    <i class="bi bi-hand-thumbs-up" onclick="toggleLike(this)"></i> <span id="user-likes">120</span>
                 </div>
-                <div class="dislike-button">
-                    <i class="bi bi-hand-thumbs-down"></i> <span>2</span>
-                </div>
-                <div class="comment-button">
-                    <i class="bi bi-chat-dots"></i> <span>5</span>
-                </div>
-            </div>
-            <div class="comentarios-container">
-                <div class="novo-comentario">
-                    <h3>Deixe seu comentário:</h3>
-                    <textarea id="texto-comentario" placeholder="Digite seu comentário"></textarea>
-                    <button id="botao-comentar">Comentar</button>
-                </div>
-                <div id="lista-de-comentarios">
-                    <!-- Exemplo de comentário -->
-                    <div class="comentario">
-                        <div class="comentario-header">
-                            <span>Usuário Teste</span>
-                            <div class="comentario-acoes">
-                                <img src="lapis_editar.svg" alt="Editar" class="editar-comentario">
-                                <img src="lixeira_deletar.svg" alt="Deletar" class="deletar-comentario">
-                            </div>
-                        </div>
-                        <p class="texto-comentario">Este é um comentário de exemplo.</p>
-                        <textarea class="editar-texto-comentario" style="display: none;">Este é um comentário de exemplo.</textarea>
-                        <button class="botao-atualizar-comentario" style="display: none;">Atualizar</button>
-                    </div>
+                <div>
+                    <i class="bi bi-hand-thumbs-down" onclick="toggleDislike(this)"></i> <span id="user-dislikes">15</span>
                 </div>
             </div>
         </div>
+
+        <!-- Coluna central com os cards -->
+        <div class="coluna-cards">
+            <h1>Publicações</h1>
+            <!-- Card 1 -->
+            <div class="prato-card">
+    <img src="img/moquecaCapixaba.png" alt="Prato 1" class="prato-imagem">
+    <div class="info-container">
+        <h2 class="prato-nome">Prato 1</h2>
+        <p class="prato-local">Local: Local 1, Cidade 1</p>
     </div>
+    <div class="interacoes">
+        <div class="likes-dislikes">
+            <i class="bi bi-hand-thumbs-up" onclick="toggleCardLike(this)"></i> <span>120</span>
+            <i class="bi bi-hand-thumbs-down" onclick="toggleCardDislike(this)"></i> <span>15</span>
+        </div>
+        <div class="comentarios">
+            <i class="bi bi-chat-dots" onclick="toggleComentario(this)"></i> <span>10</span>
+        </div>
+    </div>
+    <!-- Contêiner de comentários permanece oculto inicialmente -->
+    <div class="comentario-container">
+        <textarea placeholder="Escreva seu comentário..."></textarea>
+        <button class="btn-salvar" onclick="salvarComentario(this)">Salvar</button>
+        <button class="btn-excluir" onclick="excluirComentario(this)">Excluir</button>
+    </div>
+</div>
+        </div>
+
+        <!-- Coluna do botão "Sair" -->
+        <div class="coluna-sair">
+            <button onclick="sair()">Sair</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar o like do usuário
+        function toggleLike(element) {
+            const span = document.getElementById('user-likes');
+            if (element.classList.contains('active')) {
+                span.textContent = parseInt(span.textContent) - 1;
+                element.classList.remove('active');
+                element.style.color = '#555';
+            } else {
+                span.textContent = parseInt(span.textContent) + 1;
+                element.classList.add('active');
+                element.style.color = '#D97014';
+            }
+        }
+
+        // Função para alternar o dislike do usuário
+        function toggleDislike(element) {
+            const span = document.getElementById('user-dislikes');
+            if (element.classList.contains('active')) {
+                span.textContent = parseInt(span.textContent) - 1;
+                element.classList.remove('active');
+                element.style.color = '#555';
+            } else {
+                span.textContent = parseInt(span.textContent) + 1;
+                element.classList.add('active');
+                element.style.color = '#D97014';
+            }
+        }
+
+        // Função para alternar likes nos cards
+        function toggleCardLike(element) {
+            const span = element.nextElementSibling;
+            if (element.classList.contains('active')) {
+                span.textContent = parseInt(span.textContent) - 1;
+                element.classList.remove('active');
+                element.style.color = '#555';
+            } else {
+                span.textContent = parseInt(span.textContent) + 1;
+                element.classList.add('active');
+                element.style.color = '#D97014';
+            }
+        }
+
+        // Função para alternar dislikes nos cards
+        function toggleCardDislike(element) {
+            const span = element.nextElementSibling;
+            if (element.classList.contains('active')) {
+                span.textContent = parseInt(span.textContent) - 1;
+                element.classList.remove('active');
+                element.style.color = '#555';
+            } else {
+                span.textContent = parseInt(span.textContent) + 1;
+                element.classList.add('active');
+                element.style.color = '#D97014';
+            }
+        }
+
+        // Função para exibir ou ocultar o campo de comentários
+        function toggleComentario(element) {
+    const comentarioContainer = element.closest('.prato-card').querySelector('.comentario-container');
+    comentarioContainer.style.display = comentarioContainer.style.display === 'flex' ? 'none' : 'flex';
+}
+
+        // Função para salvar o comentário
+        function salvarComentario(button) {
+            const textarea = button.closest('.comentario-container').querySelector('textarea');
+            if (textarea.value.trim() === '') {
+                alert('O comentário não pode estar vazio.');
+                return;
+            }
+            alert('Comentário salvo: ' + textarea.value);
+        }
+
+        // Função para excluir o comentário
+        function excluirComentario(button) {
+            const textarea = button.closest('.comentario-container').querySelector('textarea');
+            textarea.value = '';
+            alert('Comentário excluído.');
+        }
+
+        // Função para sair e redirecionar para a página inicial
+        function sair() {
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>

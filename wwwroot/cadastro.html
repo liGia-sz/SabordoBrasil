@@ -67,6 +67,11 @@
         .btn-voltar:hover {
             background-color: #5a6268; /* Cor de fundo cinza mais escuro ao passar o mouse */
         }
+        #mensagem-cadastro {
+            margin-bottom: 15px;
+            font-size: 1em;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +82,9 @@
         <!-- Adicionando a frase padrão -->
         <h2>Bem-vindo ao Cadastro</h2>
         <p>Preencha os campos abaixo para criar sua conta e aproveitar todos os recursos do nosso site.</p>
+        
+        <!-- Mensagem de erro ou sucesso -->
+        <div id="mensagem-cadastro"></div>
         
         <!-- Formulário de cadastro -->
         <form id="form-cadastro">
@@ -96,19 +104,35 @@
             const email = document.getElementById('email').value;
             const senha = document.getElementById('senha').value;
             const confirmarSenha = document.getElementById('confirmar-senha').value;
+            const mensagem = document.getElementById('mensagem-cadastro');
 
-            if (senha !== confirmarSenha) {
-                alert('As senhas não coincidem!');
+            if (!nome || !email || !senha || !confirmarSenha) {
+                mensagem.style.color = "red";
+                mensagem.textContent = "Por favor, preencha todos os campos.";
+                mensagem.style.display = "block";
                 return;
             }
 
-            alert(`Cadastro realizado com sucesso!\nNome: ${nome}\nE-mail: ${email}`);
-            // Aqui você pode adicionar a lógica para enviar os dados ao servidor
+            if (senha !== confirmarSenha) {
+                mensagem.style.color = "red";
+                mensagem.textContent = "As senhas não coincidem!";
+                mensagem.style.display = "block";
+                return;
+            }
+
+            mensagem.style.color = "green";
+            mensagem.textContent = "Cadastro realizado com sucesso!";
+            mensagem.style.display = "block";
+
+            // Redireciona para a página do usuário logado após 2 segundos
+            setTimeout(() => {
+                window.location.href = 'userLogado.html'; // Substitua pelo caminho correto da página
+            }, 2000);
         }
 
         // Função para voltar à página inicial
         function voltarPagina() {
-            window.location.href = 'index.html'; // Substitua pelo caminho correto da página inicial
+            window.location.href = 'index.html'; 
         }
     </script>
 </body>

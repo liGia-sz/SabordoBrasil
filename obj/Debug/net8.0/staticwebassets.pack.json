@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\cadastro.html",
+      "PackagePath": "staticwebassets\\cadastro.html"
+    },
+    {
       "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\Logo S. do Brasil.png",
       "PackagePath": "staticwebassets\\img\\Logo S. do Brasil.png"
     },
@@ -19,6 +23,10 @@
     {
       "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\style.css",
+      "PackagePath": "staticwebassets\\style.css"
     },
     {
       "Id": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\userLogado.html",
