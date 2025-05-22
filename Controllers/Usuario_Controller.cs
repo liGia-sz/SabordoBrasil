@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SeuProjeto.Data;
 using SeuProjeto.Models;
+using System.Linq;
 
 namespace SeuProjeto.Controllers
 {
@@ -35,16 +36,15 @@ namespace SeuProjeto.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] Usuario usuario)
+        public IActionResult Login([FromBody] LoginModel model)
         {
-            var user = _context.Usuarios.FirstOrDefault(u => u.Email == usuario.Email && u.Senha == usuario.Senha);
+            var usuario = _context.Usuarios
+                .FirstOrDefault(u => u.Email == model.Email && u.Senha == model.Senha);
 
-            if (user == null)
-            {
-                return Unauthorized(new { mensagem = "E-mail ou senha inválidos." });
-            }
+            if (usuario != null)
+                return Ok(new { sucesso = true, nome = usuario.Nome });
 
-            return Ok(new { mensagem = "Login realizado com sucesso!", usuario = user });
+            return Unauthorized(new { sucesso = false, mensagem = "E-mail ou senha incorretos." });
         }
     }
 }

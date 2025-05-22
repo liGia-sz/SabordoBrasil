@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj": {}
+    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj": {
+    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj",
+        "projectUniqueName": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj",
         "projectName": "SabordoBrasil",
-        "projectPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj",
+        "projectPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj",
         "packagesPath": "C:\\Users\\Alunos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\obj\\",
+        "outputPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alunos\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -49,17 +49,23 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.5, )"
+              "version": "[8.0.13, )"
             },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.5, )"
+              "version": "[8.0.13, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.5, )"
+              "version": "[8.0.13, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[8.0.3, )"
             }
           },
           "imports": [
