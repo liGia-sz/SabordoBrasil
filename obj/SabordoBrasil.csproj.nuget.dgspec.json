@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj": {}
+    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj": {
+    "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj",
+        "projectUniqueName": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj",
         "projectName": "SabordoBrasil",
-        "projectPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\SabordoBrasil.csproj",
+        "projectPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\SabordoBrasil.csproj",
         "packagesPath": "C:\\Users\\Alunos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SABOR DO BRASIL\\SabordoBrasil\\obj\\",
+        "outputPath": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alunos\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -87,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.409/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.410/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

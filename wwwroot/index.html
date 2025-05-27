@@ -319,8 +319,7 @@
             mensagem.style.color = "green";
             mensagem.textContent = "Login realizado com sucesso!";
             mensagem.style.display = "block";
-            // Redirecionar para página do usuário logado, se quiser:
-            // window.location.href = "userLogado.html";
+            window.location.href = "userLogado.html"; // Redireciona para página do usuário logado
         })
         .catch(err => {
             mensagem.style.color = "red";
