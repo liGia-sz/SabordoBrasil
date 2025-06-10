@@ -191,14 +191,14 @@
         <!-- Coluna do perfil do usuário -->
         <div class="coluna-perfil">
             <img src="img/usuario_03.jpg" alt="Foto do Usuário">
-            <h2>Nome do Usuário</h2>
+            <h2 id="nomeUsuario">Nome do Usuário</h2>
             <div class="linha-laranja"></div>
             <div class="likes-dislikes">
                 <div>
-                    <i class="bi bi-hand-thumbs-up" onclick="toggleLike(this)"></i> <span id="user-likes">120</span>
+                    <i class="bi bi-hand-thumbs-up"></i> <span id="user-likes">120</span>
                 </div>
                 <div>
-                    <i class="bi bi-hand-thumbs-down" onclick="toggleDislike(this)"></i> <span id="user-dislikes">15</span>
+                    <i class="bi bi-hand-thumbs-down"></i> <span id="user-dislikes">15</span>
                 </div>
             </div>
         </div>
@@ -238,6 +238,9 @@
     </div>
 
     <script>
+        // Exemplo: se você salva o nome no login
+        document.getElementById('nomeUsuario').innerText = localStorage.getItem('nomeUsuario') || 'Usuário';
+
         // Função para alternar o like do usuário
         function toggleLike(element) {
             const span = document.getElementById('user-likes');

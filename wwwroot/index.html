@@ -316,9 +316,7 @@
             throw new Error("E-mail ou senha inválidos.");
         })
         .then(data => {
-            mensagem.style.color = "green";
-            mensagem.textContent = "Login realizado com sucesso!";
-            mensagem.style.display = "block";
+            localStorage.setItem('nomeUsuario', data.nome);
             window.location.href = "userLogado.html"; // Redireciona para página do usuário logado
         })
         .catch(err => {
