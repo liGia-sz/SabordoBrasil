@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using SeuProjeto.Data;
 using SeuProjeto.Models;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SeuProjeto.Controllers
 {
@@ -29,6 +31,13 @@ namespace SeuProjeto.Controllers
                 return BadRequest(new { mensagem = "E-mail já cadastrado." });
             }
 
+            // Criptografar a senha antes de salvar
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(usuario.Senha));
+                usuario.Senha = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
 
@@ -38,8 +47,16 @@ namespace SeuProjeto.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
+            // Criptografar a senha recebida para comparar
+            string senhaCriptografada;
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(model.Senha));
+                senhaCriptografada = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+
             var usuario = _context.Usuarios
-                .FirstOrDefault(u => u.Email == model.Email && u.Senha == model.Senha);
+                .FirstOrDefault(u => u.Email == model.Email && u.Senha == senhaCriptografada);
 
             if (usuario != null)
                 return Ok(new { sucesso = true, nome = usuario.Nome });
