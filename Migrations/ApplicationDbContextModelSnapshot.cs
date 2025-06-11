@@ -21,6 +21,38 @@ namespace SabordoBrasil.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("SeuProjeto.Models.Prato", b =>
+                {
+                    b.Property<int>("IdPrato")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPrato"));
+
+                    b.Property<string>("Cidade")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Dislikes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Foto")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Localidade")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NomePrato")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdPrato");
+
+                    b.ToTable("Pratos");
+                });
+
             modelBuilder.Entity("SeuProjeto.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")

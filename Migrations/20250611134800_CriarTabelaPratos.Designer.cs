@@ -11,8 +11,8 @@ using SeuProjeto.Data;
 namespace SabordoBrasil.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250522113534_Inicial")]
-    partial class Inicial
+    [Migration("20250611134800_CriarTabelaPratos")]
+    partial class CriarTabelaPratos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,38 @@ namespace SabordoBrasil.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("SeuProjeto.Models.Prato", b =>
+                {
+                    b.Property<int>("IdPrato")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPrato"));
+
+                    b.Property<string>("Cidade")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Dislikes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Foto")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Localidade")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NomePrato")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdPrato");
+
+                    b.ToTable("Pratos");
+                });
 
             modelBuilder.Entity("SeuProjeto.Models.Usuario", b =>
                 {

@@ -184,6 +184,44 @@
         .coluna-sair button:hover {
             background-color: #b85c0f;
         }
+        /* Formulário de novo prato */
+        #formPrato {
+            display: none;
+            margin: 20px 0;
+            width: 90%;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            padding: 20px;
+        }
+        #formPrato label {
+            display: block;
+            margin-top: 10px;
+        }
+        #formPrato input[type="text"],
+        #formPrato input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #formPrato button[type="submit"] {
+            margin-top: 10px;
+            background-color: #D97014;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #formPrato button[type="submit"]:hover {
+            background-color: #b85c0f;
+        }
+        #mensagem {
+            margin-top: 10px;
+            color: #28a745;
+        }
     </style>
 </head>
 <body>
@@ -201,34 +239,29 @@
                     <i class="bi bi-hand-thumbs-down"></i> <span id="user-dislikes">15</span>
                 </div>
             </div>
+            <!-- Botão para mostrar o formulário -->
+            <button id="btnMostrarFormulario" style="margin-top:20px;">Publicar novo prato</button>
         </div>
 
-        <!-- Coluna central com os cards -->
+        <!-- Coluna central com os cards e o formulário -->
         <div class="coluna-cards">
             <h1>Publicações</h1>
-            <!-- Card 1 -->
-            <div class="prato-card">
-                <img src="img/moquecaCapixaba.png" alt="Prato 1" class="prato-imagem">
-                <div class="info-container">
-                    <h2 class="prato-nome">Prato 1</h2>
-                    <p class="prato-local">Local: Local 1, Cidade 1</p>
-                </div>
-                <div class="interacoes">
-                    <div class="likes-dislikes">
-                        <i class="bi bi-hand-thumbs-up" onclick="toggleCardLike(this)"></i> <span>120</span>
-                        <i class="bi bi-hand-thumbs-down" onclick="toggleCardDislike(this)"></i> <span>15</span>
-                    </div>
-                    <div class="comentarios">
-                        <i class="bi bi-chat-dots" onclick="toggleComentario(this)"></i> <span>10</span>
-                    </div>
-                </div>
-                <!-- Contêiner de comentários -->
-                <div class="comentario-container">
-                    <textarea placeholder="Escreva seu comentário..."></textarea>
-                    <button class="btn-salvar" onclick="salvarComentario(this)">Salvar</button>
-                </div>
-                <div class="comentarios-lista"></div> <!-- Área onde os comentários serão exibidos -->
-            </div>
+            <!-- Formulário oculto inicialmente -->
+            <form id="formPrato" enctype="multipart/form-data" method="post">
+                <h3>Publicar novo prato</h3>
+                <label>Nome do Prato:</label>
+                <input type="text" name="NomePrato" required>
+                <label>Localidade:</label>
+                <input type="text" name="Localidade" required>
+                <label>Cidade:</label>
+                <input type="text" name="Cidade" required>
+                <label>Foto:</label>
+                <input type="file" name="fotoUpload" accept="image/*" required>
+                <button type="submit">Publicar</button>
+                <div id="mensagem"></div>
+            </form>
+            <!-- Cards dos pratos publicados -->
+            <div id="cardsPratos" style="width:100%;"></div>
         </div>
 
         <!-- Coluna do botão "Sair" -->
@@ -241,35 +274,67 @@
         // Exemplo: se você salva o nome no login
         document.getElementById('nomeUsuario').innerText = localStorage.getItem('nomeUsuario') || 'Usuário';
 
-        // Função para alternar o like do usuário
-        function toggleLike(element) {
-            const span = document.getElementById('user-likes');
-            if (element.classList.contains('active')) {
-                span.textContent = parseInt(span.textContent) - 1;
-                element.classList.remove('active');
-                element.style.color = '#555';
-            } else {
-                span.textContent = parseInt(span.textContent) + 1;
-                element.classList.add('active');
-                element.style.color = '#D97014';
-            }
-        }
+        // Mostrar o formulário ao clicar no botão
+        document.getElementById('btnMostrarFormulario').onclick = function() {
+            document.getElementById('formPrato').style.display = 'block';
+            this.style.display = 'none';
+        };
 
-        // Função para alternar o dislike do usuário
-        function toggleDislike(element) {
-            const span = document.getElementById('user-dislikes');
-            if (element.classList.contains('active')) {
-                span.textContent = parseInt(span.textContent) - 1;
-                element.classList.remove('active');
-                element.style.color = '#555';
-            } else {
-                span.textContent = parseInt(span.textContent) + 1;
-                element.classList.add('active');
-                element.style.color = '#D97014';
-            }
-        }
+        // Envio do formulário via fetch
+        document.getElementById('formPrato').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
 
-        // Função para alternar likes nos cards
+            const response = await fetch('/Prato/Create', {
+                method: 'POST',
+                body: data
+            });
+
+            if (response.ok) {
+                document.getElementById('mensagem').innerText = 'Prato cadastrado com sucesso!';
+                form.reset();
+                carregarPratos();
+            } else {
+                document.getElementById('mensagem').innerText = 'Erro ao cadastrar prato.';
+            }
+        });
+
+        // Função para carregar os cards dos pratos
+        async function carregarPratos() {
+            const resposta = await fetch('/Prato/ListaJson');
+            const pratos = await resposta.json();
+            const container = document.getElementById('cardsPratos');
+            container.innerHTML = '';
+            pratos.forEach(prato => {
+                container.innerHTML += `
+                    <div class="prato-card">
+                        <img src="${prato.foto}" alt="${prato.nomePrato}" class="prato-imagem" />
+                        <div class="info-container">
+                            <h2 class="prato-nome">${prato.nomePrato}</h2>
+                            <p class="prato-local">Local: ${prato.localidade}, ${prato.cidade}</p>
+                        </div>
+                        <div class="interacoes">
+                            <div class="likes-dislikes">
+                                <i class="bi bi-hand-thumbs-up" onclick="toggleCardLike(this)"></i> <span>${prato.likes}</span>
+                                <i class="bi bi-hand-thumbs-down" onclick="toggleCardDislike(this)"></i> <span>${prato.dislikes}</span>
+                            </div>
+                            <div class="comentarios">
+                                <i class="bi bi-chat-dots" onclick="toggleComentario(this)"></i> <span>0</span>
+                            </div>
+                        </div>
+                        <div class="comentario-container">
+                            <textarea placeholder="Escreva seu comentário..."></textarea>
+                            <button class="btn-salvar" onclick="salvarComentario(this)">Salvar</button>
+                        </div>
+                        <div class="comentarios-lista"></div>
+                    </div>
+                `;
+            });
+        }
+        carregarPratos();
+
+        // Funções de interação dos cards (mantidas do seu layout original)
         function toggleCardLike(element) {
             const span = element.nextElementSibling;
             if (element.classList.contains('active')) {
@@ -282,8 +347,6 @@
                 element.style.color = '#D97014';
             }
         }
-
-        // Função para alternar dislikes nos cards
         function toggleCardDislike(element) {
             const span = element.nextElementSibling;
             if (element.classList.contains('active')) {
@@ -296,24 +359,17 @@
                 element.style.color = '#D97014';
             }
         }
-
-        // Função para exibir ou ocultar o campo de comentários
         function toggleComentario(element) {
             const comentarioContainer = element.closest('.prato-card').querySelector('.comentario-container');
             comentarioContainer.style.display = comentarioContainer.style.display === 'flex' ? 'none' : 'flex';
         }
-
-        // Função para salvar o comentário
         function salvarComentario(button) {
             const comentarioContainer = button.closest('.prato-card');
             const textarea = comentarioContainer.querySelector('.comentario-container textarea');
             const comentariosLista = comentarioContainer.querySelector('.comentarios-lista');
-
             if (textarea.value.trim() === '') {
                 return;
             }
-
-            // Cria um novo elemento de comentário
             const comentarioItem = document.createElement('div');
             comentarioItem.classList.add('comentario-item');
             comentarioItem.innerHTML = `
@@ -323,34 +379,20 @@
                 </div>
                 <p>${textarea.value}</p>
             `;
-
-            // Adiciona o comentário à lista
             comentariosLista.appendChild(comentarioItem);
-
-            // Limpa o campo de texto
             textarea.value = '';
         }
-
-        // Função para excluir o comentário
         function excluirComentario(icon) {
             const comentarioItem = icon.closest('.comentario-item');
             comentarioItem.remove();
         }
-
-        // Função para editar o comentário
         function editarComentario(icon) {
             const comentarioItem = icon.closest('.comentario-item');
             const comentarioTexto = comentarioItem.querySelector('p');
             const textarea = comentarioItem.closest('.prato-card').querySelector('.comentario-container textarea');
-
-            // Preenche o campo de texto com o comentário atual
             textarea.value = comentarioTexto.textContent;
-
-            // Remove o comentário da lista
             comentarioItem.remove();
         }
-
-        // Função para sair e redirecionar para a página inicial
         function sair() {
             window.location.href = 'index.html';
         }

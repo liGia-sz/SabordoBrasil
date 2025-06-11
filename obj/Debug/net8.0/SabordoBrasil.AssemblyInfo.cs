@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SabordoBrasil")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f56daee57171eebe9956f3467891132c6d072ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb5bc2eebda603cdb61affe07e5e8ac977f5c9a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SabordoBrasil")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SabordoBrasil")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
