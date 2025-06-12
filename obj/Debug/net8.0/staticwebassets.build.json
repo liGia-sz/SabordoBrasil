@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a1IBiuxM00P98FjoKo75ONVBr7Mkbl7kZNORSbL1EPU=",
+  "Hash": "+HjGUC7QWM7gA6jIqozYKYaP9AiCJzd1jC1/Zv/bEJs=",
   "Source": "SabordoBrasil",
   "BasePath": "_content/SabordoBrasil",
   "Mode": "Default",
@@ -10,20 +10,20 @@
     {
       "Name": "SabordoBrasil\\wwwroot",
       "Source": "SabordoBrasil",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\cadastro.html",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\cadastro.cshtml",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
-      "RelativePath": "cadastro.html",
-      "AssetKind": "All",
+      "RelativePath": "cadastro.cshtml",
+      "AssetKind": "Build",
       "AssetMode": "All",
       "AssetRole": "Primary",
       "AssetMergeBehavior": "PreferTarget",
@@ -32,14 +32,14 @@
       "AssetTraitName": "",
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\cadastro.html"
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "wwwroot\\cadastro.cshtml"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\img\\batidasTropicais.png",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\batidasTropicais.png",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "img/batidasTropicais.png",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\img\\batidasTropicais.png"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\img\\Logo S. do Brasil.png",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\Logo S. do Brasil.png",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "img/Logo S. do Brasil.png",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\img\\Logo S. do Brasil.png"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\img\\moquecaCapixaba.png",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\moquecaCapixaba.png",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "img/moquecaCapixaba.png",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\img\\moquecaCapixaba.png"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\img\\panquecaAoXarope.png",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\panquecaAoXarope.png",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "img/panquecaAoXarope.png",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\img\\panquecaAoXarope.png"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\img\\usuario_01.jpg",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\usuario_01.jpg",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "img/usuario_01.jpg",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\img\\usuario_01.jpg"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\img\\usuario_02.jpg",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\usuario_02.jpg",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "img/usuario_02.jpg",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\img\\usuario_02.jpg"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\img\\usuario_03.jpg",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\img\\usuario_03.jpg",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "img/usuario_03.jpg",
       "AssetKind": "All",
@@ -169,13 +169,13 @@
       "OriginalItemSpec": "wwwroot\\img\\usuario_03.jpg"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\index.cshtml",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
-      "RelativePath": "index.html",
-      "AssetKind": "All",
+      "RelativePath": "index.cshtml",
+      "AssetKind": "Build",
       "AssetMode": "All",
       "AssetRole": "Primary",
       "AssetMergeBehavior": "PreferTarget",
@@ -184,14 +184,14 @@
       "AssetTraitName": "",
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\index.html"
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "wwwroot\\index.cshtml"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\style.css",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\style.css",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
       "RelativePath": "style.css",
       "AssetKind": "All",
@@ -207,13 +207,13 @@
       "OriginalItemSpec": "wwwroot\\style.css"
     },
     {
-      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\userLogado.html",
+      "Identity": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\userLogado.cshtml",
       "SourceId": "SabordoBrasil",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\saborDoBrasil\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Alunos\\Documents\\LÍGIA (MANHÃ)\\SabordoBrasil\\wwwroot\\",
       "BasePath": "_content/SabordoBrasil",
-      "RelativePath": "userLogado.html",
-      "AssetKind": "All",
+      "RelativePath": "userLogado.cshtml",
+      "AssetKind": "Build",
       "AssetMode": "All",
       "AssetRole": "Primary",
       "AssetMergeBehavior": "PreferTarget",
@@ -222,8 +222,8 @@
       "AssetTraitName": "",
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\userLogado.html"
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "wwwroot\\userLogado.cshtml"
     }
   ]
 }

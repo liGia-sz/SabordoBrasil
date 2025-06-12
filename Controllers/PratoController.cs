@@ -7,6 +7,7 @@ using System.IO;
 
 namespace SeuProjeto.Controllers
 {
+    [Route("[controller]")]
     public class PratoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -31,32 +32,35 @@ namespace SeuProjeto.Controllers
 
         // Salvar novo prato
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Prato prato, IFormFile fotoUpload)
+        public IActionResult Create(Prato model, IFormFile imagem)
         {
             if (ModelState.IsValid)
             {
-                if (fotoUpload != null && fotoUpload.Length > 0)
+                if (imagem != null && imagem.Length > 0)
                 {
-                    var fileName = Path.GetFileName(fotoUpload.FileName);
-                    var filePath = Path.Combine("wwwroot/img", fileName);
+                    var fileName = Path.GetFileName(imagem.FileName);
+                    var dirPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                    if (!Directory.Exists(dirPath))
+                        Directory.CreateDirectory(dirPath);
+
+                    var filePath = Path.Combine(dirPath, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        fotoUpload.CopyTo(stream);
+                        imagem.CopyTo(stream);
                     }
 
-                    prato.Foto = "/img/" + fileName;
+                    model.Foto = "/img/" + fileName;
                 }
 
-                _context.Pratos.Add(prato);
+                _context.Pratos.Add(model);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return Ok();
             }
-            return View(prato);
+            return BadRequest();
         }
 
-        [HttpGet]
+        [HttpGet("ListaJson")]
         public IActionResult ListaJson()
         {
             var pratos = _context.Pratos.ToList();

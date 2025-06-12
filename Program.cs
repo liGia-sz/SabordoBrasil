@@ -25,14 +25,10 @@ app.UseDefaultFiles(); // Serve index.html por padrão
 app.UseStaticFiles(); // Permite servir arquivos da pasta wwwroot
 app.UseStaticFiles(); // Adiciona novamente o middleware para servir arquivos estáticos
 app.UseRouting(); // Configura o roteamento
-
-// Mapeia os controladores
-app.MapControllers();
-
-// Remove o MapGet desnecessário ou ajusta para servir index.html corretamente
-app.MapGet("/", async context =>
+app.UseEndpoints(endpoints =>
 {
-    await context.Response.SendFileAsync("wwwroot/index.html");
+    endpoints.MapControllers();
+    endpoints.MapFallbackToFile("index.html");
 });
 
 // Inicia o aplicativo

@@ -235,3 +235,5 @@ C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SABOR DO BRASIL\SabordoBrasil\bin\Debu
 C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SABOR DO BRASIL\SabordoBrasil\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\bin\Debug\net8.0\MySqlConnector.dll
 C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.RazorAssemblyInfo.cache
+C:\Users\Alunos\Documents\LÍGIA (MANHÃ)\SabordoBrasil\obj\Debug\net8.0\SabordoBrasil.RazorAssemblyInfo.cs
